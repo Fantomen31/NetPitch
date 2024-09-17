@@ -16,8 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from netpitch import views as netpitch_views
 
 
 urlpatterns = [
+    path("netpitch/", netpitch_views.my_netpitch, name='netpitch'),
     path('admin/', admin.site.urls),
 ]
