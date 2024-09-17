@@ -4,4 +4,4 @@ from django.shortcuts import render
 # Create your views here.
 
 def my_netpitch(request):
-    return HttpResponse("Hello Blog!")
+    return HttpResponse("Hello NetPitch!")

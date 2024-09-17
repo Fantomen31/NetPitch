@@ -20,6 +20,6 @@ from netpitch import views as netpitch_views
 
 
 urlpatterns = [
-    path("netpitch/", netpitch_views.my_netpitch, name='netpitch'),
+    path('netpitch/', netpitch_views.my_netpitch, name='netpitch'),
     path('admin/', admin.site.urls),
 ]
