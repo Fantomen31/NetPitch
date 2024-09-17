@@ -32,6 +32,11 @@ DEBUG = True
 ALLOWED_HOSTS = ['8000-fantomen31-netpitch-m7i1lwnibws.ws-eu116.gitpod.io','.herokuapp.com']
 
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.gitpod.io',
+    'https://8000-fantomen31-netpitch-m7i1lwnibws.ws-eu116.gitpod.io',  # Add your specific Gitpod URL here
+]
+
 # Application definition
 
 INSTALLED_APPS = [
