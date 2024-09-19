@@ -1,6 +1,6 @@
 from django.http import HttpResponse 
-from .forms import ProfileForm
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -16,4 +16,4 @@ def profile_view(request):
     return render(request, 'profile.html', {'form': form})
 
 def my_netpitch(request):
-    return HttpResponse("Hello NetPitch!")
+    return HttpResponse("netpitch/index.html")
