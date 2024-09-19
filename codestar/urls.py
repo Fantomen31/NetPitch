@@ -21,6 +21,7 @@ from netpitch import views as netpitch_views
 
 urlpatterns = [
     path('netpitch/', netpitch_views.my_netpitch, name='netpitch'),
+    path('profile/', profile_view, name='profile'),
     path('admin/', admin.site.urls),
     path('summernote/', include('django_summernote.urls')),
 ]
