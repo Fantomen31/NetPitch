@@ -1,8 +1,13 @@
-from django.http import HttpResponse 
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from .models import Profile
+from .forms import ProfileForm
 
 # Create your views here.
+
+def my_netpitch(request):
+    # Your logic for the netpitch page goes here
+    return render(request, 'netpitch/netpitch.html')
 
 @login_required
 def profile_view(request):
@@ -13,7 +18,5 @@ def profile_view(request):
             return redirect('profile')
     else:
         form = ProfileForm(instance=request.user.profile)
-    return render(request, 'profile.html', {'form': form})
+    return render(request, 'netpitch/profile.html', {'form': form})
 
-def my_netpitch(request):
-    return HttpResponse("netpitch/index.html")
