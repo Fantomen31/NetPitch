@@ -11,6 +11,10 @@ def my_netpitch(request):
     # Your logic for the netpitch page goes here
     return render(request, 'netpitch/index.html')
 
+def welcome_page(request):
+    #Renders the welcome page where users can choose to log in or sign up.
+    return render(request, 'netpitch/welcome_page.html')
+
 def create_profile(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
