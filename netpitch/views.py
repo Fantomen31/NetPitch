@@ -7,9 +7,7 @@ from .forms import ProfileCreationForm
 
 # Create your views here.
 
-def my_netpitch(request):
-    # Your logic for the netpitch page goes here
-    return render(request, 'netpitch/index.html')
+
 
 def welcome_page(request):
     #Renders the welcome page where users can choose to log in or sign up.

@@ -22,5 +22,6 @@ from netpitch import views as netpitch_views
 urlpatterns = [
     path('', include('netpitch.urls')), # Include netpitch app URLs
     path('admin/', admin.site.urls),
-    path('summernote/', include('django_summernote.urls')),  
+    path('summernote/', include('django_summernote.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),  # Includes login and signup views
 ]
