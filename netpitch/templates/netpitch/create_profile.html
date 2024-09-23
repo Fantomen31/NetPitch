@@ -1,14 +1,7 @@
-{% load static %}
-
-{% url 'home' as home_url %}
-{% url 'pitches' as pitches_url %}
-{% url 'account' as account_url %}
-{% url 'login' as login_url %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}My Project{% endblock %}</title>
@@ -28,7 +21,23 @@
 
     <main>
         {% block content %}
-        <!-- Child templates will insert their content here -->
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          
+          <h2>Create Account</h2>
+          
+          <div>
+            {{ user_form.as_p }}
+          </div>
+          
+          <h2>Create Profile</h2>
+          
+          <div>
+            {{ profile_form.as_p }}
+          </div>
+          
+          <button type="submit">Create Account and Profile</button>
+        </form>
         {% endblock %}
     </main>
 

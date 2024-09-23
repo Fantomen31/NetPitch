@@ -20,8 +20,8 @@ from netpitch import views as netpitch_views
 
 
 urlpatterns = [
-    path('netpitch/', netpitch_views.my_netpitch, name='netpitch'),
-    path('profile/', netpitch_views.profile_view, name='profile'),  # Make sure this view exists
+    path('', netpitch_views.my_netpitch, name='home'),
     path('admin/', admin.site.urls),
     path('summernote/', include('django_summernote.urls')),
+    path('netpitch/', include('netpitch.urls')),  # Include netpitch app URLs
 ]
