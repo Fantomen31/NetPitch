@@ -101,3 +101,91 @@ button.btn-purple:hover {
     background-color: #4CAF50; /* Green hover */
     color: white;
 }
+
+/* Welcome Page CSS */
+
+/* Title Enhancements */
+.cool-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, rgba(106, 27, 154, 0.3), rgba(74, 0, 224, 0.3)); /* Lighter transparent purple gradient */
+    -webkit-background-clip: text;
+    color: black; /* Black text for the title */
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3); /* Slight shadow for more depth */
+}
+
+/* Container and form styling */
+.container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 40px;
+}
+
+h1, p.lead {
+    color: #4A00E0; /* Deep purple for main headings */
+}
+
+p.lead {
+    font-size: 1.2rem;
+}
+
+/* Button Styling */
+.btn-purple {
+    background-color: rgba(106, 27, 154, 0.7); /* Purple background */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    font-size: 1.1rem;
+}
+
+.btn-purple:hover {
+    background-color: #4CAF50; /* Light green on hover */
+}
+
+.btn-outline-purple {
+    background-color: transparent;
+    color: rgba(106, 27, 154, 0.7); /* Purple text */
+    border: 2px solid rgba(106, 27, 154, 0.7); /* Purple border */
+    padding: 12px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 1.1rem;
+}
+
+.btn-outline-purple:hover {
+    background-color: rgba(106, 27, 154, 0.7); /* Purple background on hover */
+    color: white; /* White text on hover */
+}
+
+/* Form input and button styling */
+.form-control {
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-shadow: none;
+}
+
+.form-control:focus {
+    border-color: rgba(106, 27, 154, 0.5);
+    box-shadow: 0 0 5px rgba(106, 27, 154, 0.2);
+}
+
+button.btn-purple {
+    background-color: rgba(106, 27, 154, 0.7);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+button.btn-purple:hover {
+    background-color: #4CAF50; /* Green hover */
+    color: white;
+}
