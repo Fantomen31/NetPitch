@@ -82,3 +82,31 @@ def profile_view(request):
         form = ProfileForm(instance=request.user.profile)
     return render(request, 'netpitch/profile.html', {'form': form})
 
+
+@login_required
+def user_page(request):
+    # Get the user's profile
+    profile = request.user.profile
+    
+    if profile.user_type == 'Writer':
+        # Get pitch decks submitted by the writer
+        pitch_decks = PitchDeck.objects.filter(writer=profile)
+        
+        # Render the writer-specific template
+        return render(request, 'netpitch/writer_page.html', {
+            'profile': profile,
+            'pitch_decks': pitch_decks
+        })
+    
+    elif profile.user_type == 'Producer':
+        # Get collaboration requests made by the producer
+        collaborations = CollaborationRequest.objects.filter(producer=profile)
+        
+        # Render the producer-specific template
+        return render(request, 'netpitch/producer_page.html', {
+            'profile': profile,
+            'collaborations': collaborations
+        })
+
+    # Add a fallback option if needed
+    return render(request, 'netpitch/profile.html', {'profile': profile})
