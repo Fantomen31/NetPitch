@@ -2,18 +2,20 @@
 
 {% extends 'netpitch/base.html' %}
 
-{% load static %}
-
-{% url 'login' as login_url %}
-{% url 'signup' as signup_url %}
-
 {% block title %}Welcome{% endblock title %}
 
 {% block content %}
-    <h1>Welcome to NetPitch</h1>
-    <p>The platform where writers and producers collaborate on new ideas.</p>
-    <p>
-        <a href="{% url 'signup' %}">Sign Up</a> |
-        <a href="{% url 'login' %}">Log In</a>
-    </p>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1 class="mb-4">Welcome to <span class="text-purple">NetPitch</span></h1>
+            <p class="lead mb-5">The platform where writers and producers collaborate on new ideas.</p>
+
+            <div class="d-flex justify-content-center">
+                <a href="{% url 'signup' %}" class="btn btn-purple me-3 btn-lg">Sign Up</a>
+                <a href="{% url 'login' %}" class="btn btn-outline-purple btn-lg">Log In</a>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}
