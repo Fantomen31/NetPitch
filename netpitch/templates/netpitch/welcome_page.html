@@ -1,19 +1,17 @@
-<!-- netpitch/templates/netpitch/welcome_page.html -->
-
 {% extends 'netpitch/base.html' %}
 
 {% block title %}Welcome{% endblock title %}
 
 {% block content %}
-<div class="container mt-5">
+<div class="container container-small full-height">
     <div class="row justify-content-center">
         <div class="col-md-8 text-center">
-            <h1 class="mb-4 cool-title">Welcome to <span class="text-purple">NetPitch</span></h1>
+            <h1 class="cool-title mb-4">Welcome to NetPitch</h1>
             <p class="lead mb-5">The platform where writers and producers collaborate on new ideas.</p>
 
             <div class="d-flex justify-content-center">
-                <a href="{% url 'signup' %}" class="btn btn-purple me-3 btn-lg">Sign Up</a>
-                <a href="{% url 'login' %}" class="btn btn-outline-purple btn-lg">Log In</a>
+                <a href="{% url 'signup' %}" class="btn btn-purple btn-lg me-3">Sign Up</a>
+                <a href="{% url 'login' %}" class="btn btn-purple btn-lg">Log In</a>
             </div>
         </div>
     </div>
