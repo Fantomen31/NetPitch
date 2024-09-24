@@ -10,36 +10,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}NetPitch{% endblock title %}</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                {% if user.is_authenticated %}
-                    <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><a href="{% url 'profile' %}">Profile</a></li>
-                    <a href="{% url 'logout' %}?next={% url 'home' %}">Logout</a>
-                {% else %}
-                    <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><a href="{% url 'login' %}">Login</a></li>
-                    <li><a href="{% url 'signup' %}">Sign Up</a></li>
-                {% endif %}
-            </ul>
-        </nav>
-    </header>
+    <div class="d-flex flex-column min-vh-100">
+        <header class="bg-purple border-bottom-green">
+            <!-- Navbar with Bootstrap classes -->
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <div class="container-fluid">
+                    <a class="navbar-brand cool-title" href="{% url 'home' %}">NetPitch</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                            {% if user.is_authenticated %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'logout' %}?next={% url 'home' %}">Logout</a>
+                                </li>
+                            {% else %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
 
-    <main>
-        {% block content %}
-        <!-- Content for individual pages will go here -->
-        {% endblock content %}
-    </main>
+        <main class="container mt-5 mb-5 flex-grow-1">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    {% block content %}
+                    <!-- Content for individual pages will go here -->
+                    {% endblock content %}
+                </div>
+            </div>
+        </main>
 
-    <footer>
-        <p>&copy; 2024 NetPitch. All rights reserved.</p>
-    </footer>
+        <footer class="bg-purple text-center py-3 border-top-green mt-auto">
+            <p>&copy; 2024 NetPitch. All rights reserved.</p>
+        </footer>
+    </div>
 
     {% block extras %}
     {% endblock %}
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'netpitch/js/main.js' %}"></script>
 </body>
 
 </html>
