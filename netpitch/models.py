@@ -12,6 +12,7 @@ class Profile(models.Model):
         ('Writer', 'Writer'),
         ('Producer', 'Producer'),
     ]
+    profile_image = models.ImageField(upload_to='profile_images/', blank=True, default='profile_images/default.jpg')
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(blank=True)

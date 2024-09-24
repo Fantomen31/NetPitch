@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
-from .models import Profile, PitchDeck
+from .models import Profile, PitchDeck, CollaborationRequest, Genre
 from .forms import CustomUserCreationForm, ProfileCreationForm, UserRegistrationForm, ProfileForm
 
 # Views here.
@@ -17,6 +18,19 @@ def writer_profile_view(request):
         })
     else:
         return redirect('home')  # Redirect if not a writer
+
+@login_required
+def producer_profile_view(request):
+    profile = request.user.profile
+    if profile.user_type == 'Producer':
+        # Fetch the collaboration requests made by this producer
+        collaboration_requests = CollaborationRequest.objects.filter(producer=profile)
+        return render(request, 'netpitch/producer_profile.html', {
+            'profile': profile,
+            'collaboration_requests': collaboration_requests
+        })
+    else:
+        return redirect('home')  # Redirect if not a producer
 
 
 def signup(request):
@@ -85,14 +99,16 @@ def create_profile(request):
 
 @login_required
 def profile_view(request):
-    if request.method == 'POST':
-        form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
-        if form.is_valid():
-            form.save()
-            return redirect('profile')
+    profile = request.user.profile
+
+    # Redirect based on user type
+    if profile.user_type == 'Writer':
+        return redirect('writer_profile')
+    elif profile.user_type == 'Producer':
+        return redirect('producer_profile')
     else:
-        form = ProfileForm(instance=request.user.profile)
-    return render(request, 'netpitch/profile.html', {'form': form})
+        # Handle the case where the user type doesn't match expected values
+        return HttpResponse("Invalid profile type")
 
 
 @login_required

@@ -6,15 +6,15 @@
 <p>{{ profile.bio }}</p>
 <img src="{% if user.profile.profile_image %}{{ user.profile.profile_image.url }}{% else %}{% static 'default.jpg' %}{% endif %}" alt="{{ user.username }}">
 
-<h2>Your Pitch Decks</h2>
+<h2>Your Collaboration Requests</h2>
 <ul>
-    {% for pitch in pitch_decks %}
+    {% for request in collaboration_requests %}
         <li>
-            <strong>{{ pitch.title }}</strong> - {{ pitch.pitch_type }} 
-            <a href="#">View</a> | <a href="#">Edit</a>
+            <strong>{{ request.pitch.title }}</strong> - {{ request.status }}
+            <a href="#">View Pitch</a>
         </li>
     {% empty %}
-        <li>No pitch decks yet.</li>
+        <li>No collaboration requests yet.</li>
     {% endfor %}
 </ul>
 {% endblock %}
