@@ -15,13 +15,14 @@
     <header>
         <nav>
             <ul>
-                <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'login' %}">Log In</a></li>
-                <li><a href="{% url 'signup' %}">Sign Up</a></li>
-
                 {% if user.is_authenticated %}
-                    <li><a href="{% url 'profile' %}">My Profile</a></li>
-                    <li><a href="{% url 'logout' %}">Log Out</a></li>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'profile' %}">Profile</a></li>
+                    <a href="{% url 'logout' %}?next={% url 'home' %}">Logout</a>
+                {% else %}
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'signup' %}">Sign Up</a></li>
                 {% endif %}
             </ul>
         </nav>

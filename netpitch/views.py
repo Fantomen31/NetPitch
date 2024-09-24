@@ -3,28 +3,43 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from .models import Profile
-from .forms import CustomUserCreationForm
-from .forms import ProfileForm
-from .forms import UserRegistrationForm
-from .forms import ProfileCreationForm
+from .forms import CustomUserCreationForm, ProfileCreationForm, UserRegistrationForm, ProfileForm
 
 # Create your views here.
 
 def signup(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('profile')  # Redirect to profile page after signup
-    else:
-        form = CustomUserCreationForm()
+        user_form = UserRegistrationForm(request.POST)
+        profile_form = ProfileCreationForm(request.POST, request.FILES)
+        
+        if user_form.is_valid() and profile_form.is_valid():
+            # Create the user
+            user = user_form.save(commit=False)
+            user.set_password(user_form.cleaned_data['password'])
+            user.save()
 
-    return render(request, 'netpitch/signup.html', {'form': form})
+            # Create the profile and link it to the user
+            profile = profile_form.save(commit=False)
+            profile.user = user
+            profile.save()
+
+            # Log in the user after account creation
+            login(request, user)
+
+            return redirect('profile')  # Redirect to profile page after creating the profile
+    else:
+        user_form = UserRegistrationForm()
+        profile_form = ProfileCreationForm()
+
+    return render(request, 'netpitch/signup.html', {
+        'user_form': user_form,
+        'profile_form': profile_form,
+    })
 
 def welcome_page(request):
     #Renders the welcome page where users can choose to log in or sign up.
     return render(request, 'netpitch/welcome_page.html')
+
 
 def create_profile(request):
     if request.method == 'POST':
@@ -43,14 +58,14 @@ def create_profile(request):
             profile.save()
 
             # Log in the user after account creation
-            login(request, user)
+            login(request, user)  # Use the login function to log in the user
 
-            return redirect('netpitch/profile.html')  # Redirect to profile page after creating the profile
+            return redirect('profile')  # Redirect to profile page after creating the profile
     else:
         user_form = UserRegistrationForm()
         profile_form = ProfileCreationForm()
 
-    return render(request, 'netpitch/create-profile.html', {
+    return render(request, 'netpitch/create_profile.html', {
         'user_form': user_form,
         'profile_form': profile_form,
     })
