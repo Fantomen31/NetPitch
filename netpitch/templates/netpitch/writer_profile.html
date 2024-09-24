@@ -6,6 +6,9 @@
 <p>{{ profile.bio }}</p>
 <img src="{% if user.profile.profile_image %}{{ user.profile.profile_image.url }}{% else %}{% static 'default.jpg' %}{% endif %}" alt="{{ user.username }}">
 
+<!-- Include profile form -->
+{% include 'netpitch/profile_form.html' %}
+
 <h2>Your Pitch Decks</h2>
 <ul>
     {% for pitch in pitch_decks %}
