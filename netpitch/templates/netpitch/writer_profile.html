@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ profile.user.username }}'s Profile</h1>
+<p>{{ profile.bio }}</p>
+<img src="{{ profile.profile_image.url }}" alt="Profile Image">
+
+<h2>Your Pitch Decks</h2>
+<ul>
+    {% for pitch in pitch_decks %}
+        <li>
+            <strong>{{ pitch.title }}</strong> - {{ pitch.pitch_type }} 
+            <a href="#">View</a> | <a href="#">Edit</a>
+        </li>
+    {% empty %}
+        <li>No pitch decks yet.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

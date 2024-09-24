@@ -2,10 +2,22 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
-from .models import Profile
+from .models import Profile, PitchDeck
 from .forms import CustomUserCreationForm, ProfileCreationForm, UserRegistrationForm, ProfileForm
 
-# Create your views here.
+# Views here.
+@login_required
+def writer_profile_view(request):
+    profile = request.user.profile
+    if profile.user_type == 'Writer':
+        pitch_decks = PitchDeck.objects.filter(writer=profile)  # Get pitch decks by the writer
+        return render(request, 'netpitch/writer_profile.html', {
+            'profile': profile,
+            'pitch_decks': pitch_decks
+        })
+    else:
+        return redirect('home')  # Redirect if not a writer
+
 
 def signup(request):
     if request.method == 'POST':
