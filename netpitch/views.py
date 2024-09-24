@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from .models import Profile, PitchDeck, CollaborationRequest
-from .forms import UserRegistrationForm, ProfileCreationForm
+from .forms import UserRegistrationForm, ProfileCreationForm, ProfileForm
 
 # Single sign-up view that creates both user and profile
 def signup(request):
@@ -38,22 +38,23 @@ def signup(request):
 @login_required
 def profile_view(request):
     profile = request.user.profile
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')  # Redirect back to profile after successful update
+    else:
+        form = ProfileForm(instance=profile)  # Pre-fill form with user's profile info
 
-    if profile.user_type == 'Writer':
-        # Fetch all pitch decks for the writer
-        pitch_decks = PitchDeck.objects.filter(writer=profile)
-        return render(request, 'netpitch/writer_profile.html', {
-            'profile': profile,
-            'pitch_decks': pitch_decks
-        })
-    
-    elif profile.user_type == 'Producer':
-        # Fetch all collaboration requests for the producer
-        collaboration_requests = CollaborationRequest.objects.filter(producer=profile)
-        return render(request, 'netpitch/producer_profile.html', {
-            'profile': profile,
-            'collaboration_requests': collaboration_requests
-        })
+    pitch_decks = PitchDeck.objects.filter(writer=profile) if profile.user_type == 'Writer' else None
+    collaboration_requests = CollaborationRequest.objects.filter(producer=profile) if profile.user_type == 'Producer' else None
+
+    return render(request, 'netpitch/profile.html', {
+        'profile': profile,
+        'form': form,
+        'pitch_decks': pitch_decks,
+        'collaboration_requests': collaboration_requests,
+    })
 
 # Simple welcome page view
 def welcome_page(request):

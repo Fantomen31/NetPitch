@@ -1,0 +1,57 @@
+{% extends 'netpitch/base.html' %}
+{% load static %}
+{% load form_tags %} 
+
+{% block content %}
+<div class="container">
+    <div class="profile-header text-center">
+        <h1>{{ profile.user.username }}'s Profile</h1>
+        <p>{{ profile.bio }}</p>
+        <img class="profile-image" src="{% if profile.profile_image %}{{ profile.profile_image.url }}{% else %}{% static 'default.jpg' %}{% endif %}" alt="{{ profile.user.username }}">
+    </div>
+
+    <!-- Profile Update Form -->
+    <div class="profile-form mt-5">
+        <h2>Update Your Profile</h2>
+        <form method="post" enctype="multipart/form-data" class="form-group">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.profile_image.label_tag }}
+                {{ form.profile_image }}
+            </div>
+            <div class="mb-3">
+                {{ form.bio.label_tag }}
+                {{ form.bio }}
+            </div>
+            <button type="submit" class="btn btn-purple btn-block">Update Profile</button>
+        </form>
+    </div>
+
+    <!-- Conditional section based on user type -->
+    {% if profile.user_type == 'Writer' %}
+        <h2 class="mt-5">Your Pitch Decks</h2>
+        <ul class="list-group">
+            {% for pitch in pitch_decks %}
+                <li class="list-group-item">
+                    <strong>{{ pitch.title }}</strong> - {{ pitch.pitch_type }} 
+                    <a href="#">View</a> | <a href="#">Edit</a>
+                </li>
+            {% empty %}
+                <li class="list-group-item">No pitch decks yet.</li>
+            {% endfor %}
+        </ul>
+    {% elif profile.user_type == 'Producer' %}
+        <h2 class="mt-5">Your Collaboration Requests</h2>
+        <ul class="list-group">
+            {% for request in collaboration_requests %}
+                <li class="list-group-item">
+                    <strong>{{ request.pitch.title }}</strong> - {{ request.status }}
+                    <a href="#">View Pitch</a>
+                </li>
+            {% empty %}
+                <li class="list-group-item">No collaboration requests yet.</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+{% endblock %}
