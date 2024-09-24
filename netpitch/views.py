@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 from .models import Profile
 from .forms import ProfileForm
 from .forms import UserRegistrationForm
@@ -7,7 +8,17 @@ from .forms import ProfileCreationForm
 
 # Create your views here.
 
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('profile')  # Redirect to profile page after signup
+    else:
+        form = UserCreationForm()
 
+    return render(request, 'netpitch/signup.html', {'form': form})
 
 def welcome_page(request):
     #Renders the welcome page where users can choose to log in or sign up.

@@ -1,0 +1,44 @@
+<!-- netpitch/templates/netpitch/base.html -->
+{% load static %}
+
+{% url 'login' as login_url %}
+{% url 'signup' as signup_url %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}NetPitch{% endblock title %}</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'login' %}">Log In</a></li>
+                <li><a href="{% url 'signup' %}">Sign Up</a></li>
+
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'profile' %}">My Profile</a></li>
+                    <li><a href="{% url 'logout' %}">Log Out</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Content for individual pages will go here -->
+        {% endblock content %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 NetPitch. All rights reserved.</p>
+    </footer>
+
+    {% block extras %}
+    {% endblock %}
+</body>
+
+</html>

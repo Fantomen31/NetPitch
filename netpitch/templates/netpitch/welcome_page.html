@@ -1,41 +1,19 @@
+<!-- netpitch/templates/netpitch/welcome_page.html -->
+
+{% extends 'netpitch/base.html' %}
+
 {% load static %}
 
 {% url 'login' as login_url %}
 {% url 'signup' as signup_url %}
 
+{% block title %}Welcome{% endblock title %}
 
-
-<!-- netpitch/templates/netpitch/welcome_page.html -->
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to NetPitch</title>
-    
-</head>
-<body>
-    <header>
-        <h1>Welcome to NetPitch!</h1>
-        <p>The platform where writers and producers collaborate on new ideas.</p>
-    </header>
-
-    <section>
-        <h2>Get Started</h2>
-        <p>Log in or Sign up to access the platform.</p>
-        <a href="{% url 'login' %}">Log In</a> | 
-        <a href="{% url 'signup' %}">Sign Up</a>
-    </section>
-
-    <section>
-        <h2>Platform Features</h2>
-        <ul>
-            <li>Writers can submit pitch decks.</li>
-            <li>Producers can browse and request collaboration.</li>
-            <li>Streamlined communication between writers and producers.</li>
-        </ul>
-    </section>
-</body>
-</html>
+{% block content %}
+    <h1>Welcome to NetPitch</h1>
+    <p>The platform where writers and producers collaborate on new ideas.</p>
+    <p>
+        <a href="{% url 'signup' %}">Sign Up</a> |
+        <a href="{% url 'login' %}">Log In</a>
+    </p>
+{% endblock content %}
