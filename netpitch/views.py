@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 from .models import Profile
+from .forms import CustomUserCreationForm
 from .forms import ProfileForm
 from .forms import UserRegistrationForm
 from .forms import ProfileCreationForm
@@ -16,7 +18,7 @@ def signup(request):
             login(request, user)
             return redirect('profile')  # Redirect to profile page after signup
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
 
     return render(request, 'netpitch/signup.html', {'form': form})
 
