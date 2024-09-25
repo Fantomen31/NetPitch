@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from .models import Profile, PitchDeck, CollaborationRequest
-from .forms import UserRegistrationForm, ProfileCreationForm, ProfileForm
+from .forms import UserRegistrationForm, ProfileCreationForm, ProfileForm, PitchDeckForm
 
 # Single sign-up view that creates both user and profile
 def signup(request):
@@ -64,3 +64,18 @@ def welcome_page(request):
 @login_required
 def user_page(request):
     return redirect('profile_view')  # Reuse profile_view for simplicity
+
+# PitchDeck Submission
+@login_required
+def submit_pitch_deck(request):
+    if request.method == 'POST':
+        form = PitchDeckForm(request.POST, request.FILES)
+        if form.is_valid():
+            pitch_deck = form.save(commit=False)
+            pitch_deck.writer = request.user.profile  # Link to the writer's profile
+            pitch_deck.save()
+            return redirect('pitch_deck_detail', pk=pitch_deck.pk)  # Redirect to details page
+    else:
+        form = PitchDeckForm()
+    
+    return render(request, 'netpitch/submit_pitch_deck.html', {'form': form})

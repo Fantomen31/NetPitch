@@ -8,4 +8,6 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
     path('profile/', views.profile_view, name='profile'),
+    path('submit-pitch/', views.submit_pitch_deck, name='submit_pitch_deck'),
+    path('pitch-deck/<int:pk>/', views.pitch_deck_detail, name='pitch_deck_detail'),  # Detail view
 ]

@@ -1,0 +1,14 @@
+{% extends 'netpitch/base.html' %}
+
+{% block title %}Submit Pitch Deck{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Submit Your Pitch Deck</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-purple btn-block">Submit</button>
+    </form>
+</div>
+{% endblock content %}
