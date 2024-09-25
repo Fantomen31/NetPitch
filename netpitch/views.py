@@ -79,3 +79,9 @@ def submit_pitch_deck(request):
         form = PitchDeckForm()
     
     return render(request, 'netpitch/submit_pitch_deck.html', {'form': form})
+
+#PitchDeck View
+@login_required
+def pitch_deck_detail(request, pk):
+    pitch_deck = get_object_or_404(PitchDeck, pk=pk)
+    return render(request, 'netpitch/pitch_deck_detail.html', {'pitch_deck': pitch_deck})
