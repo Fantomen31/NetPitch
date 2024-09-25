@@ -1,0 +1,14 @@
+{% extends 'netpitch/base.html' %}
+
+{% block title %}{{ pitch_deck.title }}{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>{{ pitch_deck.title }}</h2>
+    <img src="{{ pitch_deck.image.url }}" alt="{{ pitch_deck.title }}" class="img-fluid" />
+    <p><strong>Synopsis:</strong> {{ pitch_deck.synopsis }}</p>
+    <p><strong>Theme:</strong> {{ pitch_deck.theme }}</p>
+    <p><strong>Genre:</strong> {{ pitch_deck.genre.name }}</p>
+    <p><strong>Type:</strong> {{ pitch_deck.pitch_type }}</p>
+</div>
+{% endblock content %}
