@@ -34,6 +34,7 @@ class PitchDeck(models.Model):
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE, blank=True, default='Thriller')
     pitch_type = models.CharField(max_length=20, choices=TYPE_CHOICES)
     writer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="pitch_decks")
+    image = models.ImageField(upload_to='pitch_images/', blank=True, null=True)
 
     def __str__(self):
         return f"{self.title} ({self.pitch_type})"

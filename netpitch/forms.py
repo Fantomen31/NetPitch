@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, PitchDeck
 
 class CustomUserCreationForm(UserCreationForm):
     USER_TYPE_CHOICES = [
@@ -40,3 +40,12 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['bio', 'profile_image']
+
+class PitchDeckForm(forms.ModelForm):
+    class Meta:
+        model = PitchDeck
+        fields = ['title', 'genre', 'pitch_type', 'synopsis', 'theme', 'image']
+        widgets = {
+            'synopsis': forms.Textarea(attrs={'rows': 4}),
+            'theme': forms.TextInput(attrs={'placeholder': 'Enter the theme'}),
+        }
