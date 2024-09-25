@@ -23,19 +23,20 @@ class Profile(models.Model):
         return self.user.username
 
 class PitchDeck(models.Model):
-    PITCH_TYPE_CHOICES = [
+    TYPE_CHOICES = [
         ('Film', 'Film'),
         ('TV Show', 'TV Show'),
     ]
 
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=200)
     synopsis = models.TextField()
-    genre = models.ForeignKey('netpitch.Genre', on_delete=models.SET_NULL, null=True)  # String reference for Genre
-    pitch_type = models.CharField(max_length=10, choices=PITCH_TYPE_CHOICES)
-    writer = models.ForeignKey('netpitch.Profile', on_delete=models.CASCADE)  # String reference for Profile
+    theme = models.CharField(max_length=100, blank=True, default='South Korean Thriller')
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE, blank=True, default='Thriller')
+    pitch_type = models.CharField(max_length=20, choices=TYPE_CHOICES)
+    writer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="pitch_decks")
 
     def __str__(self):
-        return self.title
+        return f"{self.title} ({self.pitch_type})"
 
 class CollaborationRequest(models.Model):
     pitch = models.ForeignKey('netpitch.PitchDeck', on_delete=models.CASCADE)  # Use string reference for PitchDeck
