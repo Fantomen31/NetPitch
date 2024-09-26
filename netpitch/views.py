@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from .models import Profile, PitchDeck, CollaborationRequest
@@ -38,16 +38,17 @@ def signup(request):
 @login_required
 def profile_view(request):
     profile = request.user.profile
+
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
-            return redirect('profile')  # Redirect back to profile after successful update
+            return redirect('profile_view')  # Redirect back to profile after successful update
     else:
         form = ProfileForm(instance=profile)  # Pre-fill form with user's profile info
 
-    pitch_decks = PitchDeck.objects.filter(writer=profile) if profile.user_type == 'Writer' else None
-    collaboration_requests = CollaborationRequest.objects.filter(producer=profile) if profile.user_type == 'Producer' else None
+    pitch_decks = PitchDeck.objects.filter(writer=profile.user) if profile.user_type == 'Writer' else None
+    collaboration_requests = CollaborationRequest.objects.filter(producer=profile.user) if profile.user_type == 'Producer' else None
 
     return render(request, 'netpitch/profile.html', {
         'profile': profile,
@@ -63,7 +64,7 @@ def welcome_page(request):
 # User profile page redirect
 @login_required
 def user_page(request):
-    return redirect('profile_view')  # Reuse profile_view for simplicity
+    return redirect('profile')  # Reuse profile_view for simplicity
 
 # PitchDeck Submission
 @login_required
@@ -72,7 +73,7 @@ def submit_pitch_deck(request):
         form = PitchDeckForm(request.POST, request.FILES)
         if form.is_valid():
             pitch_deck = form.save(commit=False)
-            pitch_deck.writer = request.user.profile  # Link to the writer's profile
+            pitch_deck.writer = request.user  # Link to the writer's profile
             pitch_deck.save()
             return redirect('pitch_deck_detail', pk=pitch_deck.pk)  # Redirect to details page
     else:

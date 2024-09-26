@@ -17,11 +17,11 @@
             {% csrf_token %}
             <div class="mb-3">
                 {{ form.profile_image.label_tag }}
-                {{ form.profile_image }}
+                {{ form.profile_image.as_widget }}
             </div>
             <div class="mb-3">
                 {{ form.bio.label_tag }}
-                {{ form.bio }}
+                {{ form.bio.as_widget }}
             </div>
             <button type="submit" class="btn btn-purple btn-block">Update Profile</button>
         </form>
@@ -29,12 +29,24 @@
 
     <!-- Conditional section based on user type -->
     {% if profile.user_type == 'Writer' %}
+        <!-- Submit Pitch Deck Button -->
+        <div class="mt-4 text-center">
+            <a href="{% url 'submit_pitch_deck' %}" class="btn btn-outline-purple btn-lg">Submit New Pitch Deck</a>
+        </div>
+
         <h2 class="mt-5">Your Pitch Decks</h2>
         <ul class="list-group">
             {% for pitch in pitch_decks %}
-                <li class="list-group-item">
-                    <strong>{{ pitch.title }}</strong> - {{ pitch.pitch_type }} 
-                    <a href="#">View</a> | <a href="#">Edit</a>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>{{ pitch.title }}</strong> - {{ pitch.pitch_type }} 
+                        <p class="mb-1"><strong>Genre:</strong> {{ pitch.genre.name }}</p>
+                        <p class="mb-1"><strong>Theme:</strong> {{ pitch.theme }}</p>
+                    </div>
+                    <div>
+                        <a href="{% url 'pitch_deck_detail' pitch.id %}" class="btn btn-outline-info btn-sm">View</a>
+                        <a href="#" class="btn btn-outline-warning btn-sm">Edit</a>
+                    </div>
                 </li>
             {% empty %}
                 <li class="list-group-item">No pitch decks yet.</li>
@@ -44,9 +56,12 @@
         <h2 class="mt-5">Your Collaboration Requests</h2>
         <ul class="list-group">
             {% for request in collaboration_requests %}
-                <li class="list-group-item">
-                    <strong>{{ request.pitch.title }}</strong> - {{ request.status }}
-                    <a href="#">View Pitch</a>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>{{ request.pitch.title }}</strong> 
+                        <p class="mb-1"><strong>Status:</strong> {{ request.status }}</p>
+                    </div>
+                    <a href="{% url 'pitch_deck_detail' request.pitch.id %}" class="btn btn-outline-info btn-sm">View Pitch</a>
                 </li>
             {% empty %}
                 <li class="list-group-item">No collaboration requests yet.</li>

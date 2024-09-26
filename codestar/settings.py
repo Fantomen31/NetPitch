@@ -117,7 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 #Login redirectory. 
 
-LOGIN_REDIRECT_URL = 'profile'  # or whatever page you want to redirect to after login
+LOGIN_REDIRECT_URL = 'profile_view'  # or whatever page you want to redirect to after login
 LOGOUT_REDIRECT_URL = 'welcome_page'  # redirect after logout
 
 

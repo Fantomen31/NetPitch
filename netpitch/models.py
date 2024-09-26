@@ -13,7 +13,7 @@ class Profile(models.Model):
         ('Producer', 'Producer'),
     ]
     profile_image = models.ImageField(upload_to='profile_images/', blank=True, default='profile_images/default.jpg')
-
+    
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(blank=True)
     profile_image = models.ImageField(upload_to='profile_images/', blank=True)
@@ -30,8 +30,8 @@ class PitchDeck(models.Model):
 
     title = models.CharField(max_length=200)
     synopsis = models.TextField()
-    theme = models.CharField(max_length=100, blank=True, default='South Korean Thriller')
-    genre = models.ForeignKey(Genre, on_delete=models.CASCADE, blank=True, default='Thriller')
+    theme = models.CharField(max_length=100, blank=True, null=True)
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE, blank=True, null=True)
     pitch_type = models.CharField(max_length=20, choices=TYPE_CHOICES)
     writer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="pitch_decks")
     image = models.ImageField(upload_to='pitch_images/', blank=True, null=True)
