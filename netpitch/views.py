@@ -48,7 +48,7 @@ def profile_view(request):
         form = ProfileForm(instance=profile)  # Pre-fill form with user's profile info
 
     pitch_decks = PitchDeck.objects.filter(writer=profile.user) if profile.user_type == 'Writer' else None
-    collaboration_requests = CollaborationRequest.objects.filter(producer=profile.user) if profile.user_type == 'Producer' else None
+    collaboration_requests = CollaborationRequest.objects.filter(producer=profile) if profile.user_type == 'Producer' else None
 
     return render(request, 'netpitch/profile.html', {
         'profile': profile,
