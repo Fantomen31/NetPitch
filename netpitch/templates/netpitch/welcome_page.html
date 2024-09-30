@@ -21,7 +21,7 @@
                 {% for pitch in all_pitch_decks %}
                 <a href="{% url 'pitch_deck_detail' pitch.id %}" class="pitch-deck-link">
                     <div class="pitch-deck-card" 
-                         style="background-image: url('{% if pitch.image %}{{ pitch.image.url }}{% else %}{% static 'images/default_pitch_image.jpg' %}{% endif %}');">
+                         style="background-image: url('{% if pitch.image %}{{ pitch.image.url }}{% else %}{% static 'images/default_pitch_image.jpg' %}{% endif %}')">
                         <div class="pitch-deck-info">
                             <strong>{{ pitch.title }}</strong> - {{ pitch.pitch_type }}
                             <p><strong>Genre:</strong> {{ pitch.genre.name }}</p>

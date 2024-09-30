@@ -16,10 +16,10 @@
 <!-- Update Profile & Submit Pitch Deck Button -->
 <div class="container">
     <div class="row">
-        <div class="col-md">
+        <div class="col-12 col-md-6 mb-3">
             <a href="{% url 'update_profile' %}" class="btn btn-purple btn-block">Update Profile</a>
         </div>
-        <div class="col-md">
+        <div class="col-12 col-md-6 mb-3">
             <a href="{% url 'submit_pitch_deck' %}" class="btn btn-purple btn-block">Submit New Pitch Deck</a>
         </div>
     </div>
@@ -30,7 +30,7 @@
 <div class="pitch-deck-grid">
     {% for pitch in pitch_decks %}
         <a href="{% url 'pitch_deck_detail' pitch.id %}" class="pitch-deck-link">
-            <div class="pitch-deck-card" style="background-image: url('{% if pitch.image %}{{ pitch.image.url }}{% else %}{% static 'images/default_pitch_image.jpg' %}{% endif %}');">
+            <div class="pitch-deck-card" style="background-image: url('{% if pitch.image %}{{ pitch.image.url }}{% else %}{% static 'images/default_pitch_image.jpg' %}{% endif %}')">
                 <div class="pitch-deck-info">
                     <strong>{{ pitch.title }}</strong> - {{ pitch.pitch_type }}
                     <p><strong>Genre:</strong> {{ pitch.genre.name }}</p>
