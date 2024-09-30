@@ -9,6 +9,8 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
     path('profile/', views.profile_view, name='profile_view'),
     path('update-profile/', views.update_profile, name='update_profile'),
+    path('pitch-deck/<int:pk>/edit/', views.edit_pitch_deck, name='edit_pitch_deck'),
+    path('pitch-deck/<int:pk>/delete/', views.delete_pitch_deck, name='delete_pitch_deck'),
     path('submit-pitch-deck/', views.submit_pitch_deck, name='submit_pitch_deck'),
     path('pitch-deck/<int:pk>/', views.pitch_deck_detail, name='pitch_deck_detail'),  # Detail view
 ]

@@ -76,20 +76,32 @@ main {
     border-radius: 50%;
     margin-top: 15px;
 }
-
-/* Update Profile button */
-button.btn-purple {
+/* Standard button style (purple) */
+button.btn-purple, button.btn-delete {
     background-color: rgba(106, 27, 154, 0.7);
     color: white;
     border: none;
     padding: 12px 20px;
     border-radius: 5px;
-    width: 100%;
+    width: 100%;  /* Ensure buttons take the full width */
     transition: background-color 0.3s ease;
 }
 
+/* Green hover for purple button */
 button.btn-purple:hover {
     background-color: #4CAF50; /* Green hover */
+}
+
+/* Red hover for delete button */
+button.btn-delete:hover {
+    background-color: #FF0000; /* Red hover */
+}
+
+/* Ensure consistent spacing for form buttons */
+form button {
+    width: 100%; /* Make sure all buttons inside forms are full width */
+    margin: 0; /* Remove any extra margin */
+    padding: 12px 20px; /* Ensure consistent padding */
 }
 
 /* ============= Pitch Deck Grid Styles ============= */

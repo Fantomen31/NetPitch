@@ -1,0 +1,22 @@
+{% extends 'netpitch/base.html' %}
+{% load static %}
+
+{% block title %}Edit Pitch Deck{% endblock title %}
+
+{% block content %}
+    <h2>Edit {{ pitch_deck.title }}</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="container">
+            <div class="row">
+        <div class="col-12 col-md-6 mb-3">
+            <button type="submit" class="btn btn-purple">Save</button>
+        </div>
+        <div class="col-12 col-md-6 mb-3">
+            <a href="{% url 'pitch_deck_detail' pitch_deck.id %}" class="btn btn-purple btn-block">Cancel</a>
+        </div>
+    </form>
+    </div>
+</div>
+{% endblock content %}

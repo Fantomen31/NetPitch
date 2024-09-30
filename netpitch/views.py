@@ -94,6 +94,33 @@ def submit_pitch_deck(request):
     
     return render(request, 'netpitch/submit_pitch_deck.html', {'form': form})
 
+
+# Edit Pitch Deck View
+@login_required
+def edit_pitch_deck(request, pk):
+    pitch_deck = get_object_or_404(PitchDeck, pk=pk, writer=request.user)
+
+    if request.method == 'POST':
+        form = PitchDeckForm(request.POST, request.FILES, instance=pitch_deck)
+        if form.is_valid():
+            form.save()
+            return redirect('profile_view')
+    else:
+        form = PitchDeckForm(instance=pitch_deck)
+
+    return render(request, 'netpitch/edit_pitch_deck.html', {'form': form, 'pitch_deck': pitch_deck})
+
+# Delete Pitch Deck View
+@login_required
+def delete_pitch_deck(request, pk):
+    pitch_deck = get_object_or_404(PitchDeck, pk=pk, writer=request.user)
+
+    if request.method == 'POST':
+        pitch_deck.delete()
+        return redirect('profile_view')  # Redirect to profile after deletion
+
+    return render(request, 'netpitch/pitch_deck_detail.html', {'pitch_deck': pitch_deck})
+
 #PitchDeck View
 @login_required
 def pitch_deck_detail(request, pk):
