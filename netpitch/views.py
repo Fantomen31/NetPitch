@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
+from django.contrib import messages
 from .models import Profile, PitchDeck, CollaborationRequest
-from .forms import UserRegistrationForm, ProfileCreationForm, ProfileForm, PitchDeckForm
+from .forms import UserRegistrationForm, ProfileCreationForm, ProfileForm, PitchDeckForm, CollaborationRequestForm
 
 # Single sign-up view that creates both user and profile
 def signup(request):
@@ -126,3 +127,32 @@ def delete_pitch_deck(request, pk):
 def pitch_deck_detail(request, pk):
     pitch_deck = get_object_or_404(PitchDeck, pk=pk)
     return render(request, 'netpitch/pitch_deck_detail.html', {'pitch_deck': pitch_deck})
+
+
+#Collaboration request View
+@login_required
+def submit_collaboration_request(request, pk):
+    pitch_deck = get_object_or_404(PitchDeck, pk=pk)
+    profile = request.user.profile
+
+    # Ensure only producers can submit collaboration requests
+    if profile.user_type != 'Producer':
+        return redirect('home')  # Redirect to home if the user is not a producer
+
+    if request.method == 'POST':
+        form = CollaborationRequestForm(request.POST)
+        if form.is_valid():
+            collaboration_request = form.save(commit=False)
+            collaboration_request.producer = profile
+            collaboration_request.pitch = pitch_deck
+            collaboration_request.save()
+
+            messages.success(request, 'Your collaboration request has been submitted successfully!')
+            return redirect('pitch_deck_detail', pk=pitch_deck.pk)  # Redirect back to the pitch deck detail page
+    else:
+        form = CollaborationRequestForm()
+
+    return render(request, 'netpitch/submit_collaboration_request.html', {
+        'form': form,
+        'pitch_deck': pitch_deck,
+    })

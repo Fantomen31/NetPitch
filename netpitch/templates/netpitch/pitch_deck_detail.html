@@ -32,6 +32,10 @@
         </form>
      </div>
      {% endif %}
+<!-- For -->
+     {% if user.profile.user_type == 'Producer' %}
+    <a href="{% url 'submit_collaboration_request' pitch_deck.id %}" class="btn btn-purple btn-block">Collaborate!</a>
+    {% endif %}
 
 </div>
 {% endblock content %}

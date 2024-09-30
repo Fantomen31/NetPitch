@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Profile, PitchDeck
+from .models import Profile, PitchDeck, CollaborationRequest
 
 class CustomUserCreationForm(UserCreationForm):
     USER_TYPE_CHOICES = [
@@ -48,4 +48,12 @@ class PitchDeckForm(forms.ModelForm):
         widgets = {
             'synopsis': forms.Textarea(attrs={'rows': 4}),
             'theme': forms.TextInput(attrs={'placeholder': 'Enter the theme'}),
+        }
+
+class CollaborationRequestForm(forms.ModelForm):
+    class Meta:
+        model = CollaborationRequest
+        fields = ['message']  
+        widgets = {
+            'message': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Enter your message to the writer'}),
         }

@@ -1,0 +1,15 @@
+{% extends 'netpitch/base.html' %}
+{% load static %}
+
+{% block title %}Collaboration Request{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <h2>Submit Collaboration Request for "{{ pitch_deck.title }}"</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-purple">Submit Request</button>
+    </form>
+</div>
+{% endblock content %}
