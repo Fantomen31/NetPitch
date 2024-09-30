@@ -9,9 +9,9 @@
     </div>
     <h1>{{ profile.user.username }}</h1>
     <p>{{ profile.bio }}</p>
-    
-<!-- Conditional section based on user type -->
-    {% if profile.user_type == 'Writer' %}
+
+<!-- If Writer Profile -->
+{% if profile.user_type == 'Writer' %}
 
 <!-- Update Profile & Submit Pitch Deck Button -->
 <div class="container">
@@ -43,8 +43,16 @@
     {% endfor %}
 </ul>
 
-<!-- Collaboration Requests-->
+<!-- If Producer Profile-->
     {% elif profile.user_type == 'Producer' %}
+
+<!-- Update Profile & Submit Pitch Deck Button -->
+<div class="container-justify-center">
+        <div class="col-md-jsutify-center">
+            <a href="{% url 'update_profile' %}" class="btn btn-purple btn-block">Update Profile</a>
+        </div>
+</div>
+<!-- Collaboration Requests-->
         <h2 class="mt-5">Your Collaboration Requests</h2>
         <ul class="list-group">
             {% for request in collaboration_requests %}
