@@ -66,7 +66,13 @@ def update_profile(request):
 
 # Simple welcome page view
 def welcome_page(request):
-    return render(request, 'netpitch/welcome_page.html')
+    all_pitch_decks = None
+    
+    # If user is logged in, fetch all pitch decks
+    if request.user.is_authenticated:
+        all_pitch_decks = PitchDeck.objects.all()
+
+    return render(request, 'netpitch/welcome_page.html', {'all_pitch_decks': all_pitch_decks})
 
 # User profile page redirect
 @login_required

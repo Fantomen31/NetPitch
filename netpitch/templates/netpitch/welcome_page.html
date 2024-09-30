@@ -1,18 +1,37 @@
 {% extends 'netpitch/base.html' %}
+{% load static %}
 
 {% block title %}Welcome{% endblock title %}
 
 {% block content %}
-<div class="container container-small full-height">
+<div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8 text-center">
+        <div class="col-md text-center">
             <h1 class="cool-title mb-4">Welcome to NetPitch</h1>
             <p class="lead mb-5">The platform where writers and producers collaborate on new ideas.</p>
 
+            {% if not user.is_authenticated %}
             <div class="d-flex justify-content-center">
                 <a href="{% url 'signup' %}" class="btn btn-purple btn-lg me-3">Sign Up</a>
                 <a href="{% url 'login' %}" class="btn btn-purple btn-lg">Log In</a>
             </div>
+            {% else %}
+            <h2 class="mt-5">Pitch Decks</h2>
+            <div class="pitch-deck-grid">
+                {% for pitch in all_pitch_decks %}
+                <a href="{% url 'pitch_deck_detail' pitch.id %}" class="pitch-deck-link">
+                    <div class="pitch-deck-card" 
+                         style="background-image: url('{% if pitch.image %}{{ pitch.image.url }}{% else %}{% static 'images/default_pitch_image.jpg' %}{% endif %}');">
+                        <div class="pitch-deck-info">
+                            <strong>{{ pitch.title }}</strong> - {{ pitch.pitch_type }}
+                            <p><strong>Genre:</strong> {{ pitch.genre.name }}</p>
+                            <p><strong>Theme:</strong> {{ pitch.theme }}</p>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>
