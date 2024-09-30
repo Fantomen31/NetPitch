@@ -1,0 +1,22 @@
+{% extends 'netpitch/base.html' %}
+{% load static %}
+{% load form_tags %} 
+
+{% block content %}
+<!-- Profile Update Form -->
+        <div class="profile-form mt-5">
+            <h2>Update Your Profile</h2>
+            <form method="post" enctype="multipart/form-data" class="form-group">
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{ form.profile_image.label_tag }}
+                    {{ form.profile_image.as_widget }}
+                </div>
+                <div class="mb-3">
+                    {{ form.bio.label_tag }}
+                    {{ form.bio.as_widget }}
+                </div>
+                <button type="submit" class="btn btn-purple btn-block">Save</button>
+            </form>
+        </div>
+{% endblock content%}

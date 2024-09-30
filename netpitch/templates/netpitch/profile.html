@@ -5,34 +5,25 @@
 {% block content %}
 <div class="container">
     <div class="profile-header text-center">
-        <h1>{{ profile.user.username }}'s Profile</h1>
-        <p>{{ profile.bio }}</p>
         <img class="profile-image" src="{% if profile.profile_image %}{{ profile.profile_image.url }}{% else %}{% static 'default.jpg' %}{% endif %}" alt="{{ profile.user.username }}">
     </div>
-
-    <!-- Profile Update Form -->
-    <div class="profile-form mt-5">
-        <h2>Update Your Profile</h2>
-        <form method="post" enctype="multipart/form-data" class="form-group">
-            {% csrf_token %}
-            <div class="mb-3">
-                {{ form.profile_image.label_tag }}
-                {{ form.profile_image.as_widget }}
-            </div>
-            <div class="mb-3">
-                {{ form.bio.label_tag }}
-                {{ form.bio.as_widget }}
-            </div>
-            <button type="submit" class="btn btn-purple btn-block">Update Profile</button>
-        </form>
-    </div>
-
+    <h1>{{ profile.user.username }}</h1>
+    <p>{{ profile.bio }}</p>
+    
     <!-- Conditional section based on user type -->
     {% if profile.user_type == 'Writer' %}
-        <!-- Submit Pitch Deck Button -->
-        <div class="mt-4 text-center">
-            <a href="{% url 'submit_pitch_deck' %}" class="btn btn-outline-purple btn-lg">Submit New Pitch Deck</a>
+
+<!-- Update Profile & Submit Pitch Deck Button -->
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <a href="{% url 'update_profile' %}" class="btn btn-purple btn-block">Update Profile</a>
         </div>
+        <div class="col-md">
+            <a href="{% url 'submit_pitch_deck' %}" class="btn btn-purple btn-block">Submit New Pitch Deck</a>
+        </div>
+    </div>
+</div>
 
         <h2 class="mt-5">Your Pitch Decks</h2>
         <ul class="list-group">

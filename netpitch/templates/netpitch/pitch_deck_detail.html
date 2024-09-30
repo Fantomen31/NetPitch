@@ -1,11 +1,16 @@
 {% extends 'netpitch/base.html' %}
+{% load static %}
 
 {% block title %}{{ pitch_deck.title }}{% endblock title %}
 
 {% block content %}
 <div class="container mt-5">
+    <img 
+        src="{% if pitch_deck.image %}{{ pitch_deck.image.url }}{% else %}{% static 'default_pitch_image.jpg' %}{% endif %}" 
+        alt="{{ pitch_deck.title }}" 
+        class="img-fluid" 
+    />
     <h2>{{ pitch_deck.title }}</h2>
-    <img src="{{ pitch_deck.image.url }}" alt="{{ pitch_deck.title }}" class="img-fluid" />
     <p><strong>Synopsis:</strong> {{ pitch_deck.synopsis }}</p>
     <p><strong>Theme:</strong> {{ pitch_deck.theme }}</p>
     <p><strong>Genre:</strong> {{ pitch_deck.genre.name }}</p>

@@ -38,24 +38,31 @@ def signup(request):
 @login_required
 def profile_view(request):
     profile = request.user.profile
-
-    if request.method == 'POST':
-        form = ProfileForm(request.POST, request.FILES, instance=profile)
-        if form.is_valid():
-            form.save()
-            return redirect('profile_view')  # Redirect back to profile after successful update
-    else:
-        form = ProfileForm(instance=profile)  # Pre-fill form with user's profile info
-
+    # Get the user's pitch decks if they are a writer
     pitch_decks = PitchDeck.objects.filter(writer=profile.user) if profile.user_type == 'Writer' else None
+    # Get the producer's collaboration requests if they are a producer
     collaboration_requests = CollaborationRequest.objects.filter(producer=profile) if profile.user_type == 'Producer' else None
 
     return render(request, 'netpitch/profile.html', {
         'profile': profile,
-        'form': form,
         'pitch_decks': pitch_decks,
         'collaboration_requests': collaboration_requests,
     })
+
+# Update Profile View
+@login_required
+def update_profile(request):
+    profile = request.user.profile  # Get the logged-in user's profile
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)  # Bind form with submitted data
+        if form.is_valid():
+            form.save()  # Save the updated profile
+            return redirect('profile_view')  # Redirect to the profile view after successful update
+    else:
+        form = ProfileForm(instance=profile)  # Pre-fill form with user's current profile data
+
+    return render(request, 'netpitch/update_profile.html', {'form': form})
 
 # Simple welcome page view
 def welcome_page(request):
