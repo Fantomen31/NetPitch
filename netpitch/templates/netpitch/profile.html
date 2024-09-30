@@ -10,7 +10,7 @@
     <h1>{{ profile.user.username }}</h1>
     <p>{{ profile.bio }}</p>
     
-    <!-- Conditional section based on user type -->
+<!-- Conditional section based on user type -->
     {% if profile.user_type == 'Writer' %}
 
 <!-- Update Profile & Submit Pitch Deck Button -->
@@ -25,24 +25,25 @@
     </div>
 </div>
 
-        <h2 class="mt-5">Your Pitch Decks</h2>
-        <ul class="list-group">
-            {% for pitch in pitch_decks %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                        <strong>{{ pitch.title }}</strong> - {{ pitch.pitch_type }} 
-                        <p class="mb-1"><strong>Genre:</strong> {{ pitch.genre.name }}</p>
-                        <p class="mb-1"><strong>Theme:</strong> {{ pitch.theme }}</p>
-                    </div>
-                    <div>
-                        <a href="{% url 'pitch_deck_detail' pitch.id %}" class="btn btn-outline-info btn-sm">View</a>
-                        <a href="#" class="btn btn-outline-warning btn-sm">Edit</a>
-                    </div>
-                </li>
-            {% empty %}
-                <li class="list-group-item">No pitch decks yet.</li>
-            {% endfor %}
-        </ul>
+<!-- Pitch Deck -->
+<h2 class="mt-5">Pitch Decks</h2>
+<div class="pitch-deck-grid">
+    {% for pitch in pitch_decks %}
+        <a href="{% url 'pitch_deck_detail' pitch.id %}" class="pitch-deck-link">
+            <div class="pitch-deck-card" style="background-image: url('{% if pitch.image %}{{ pitch.image.url }}{% else %}{% static 'images/default_pitch_image.jpg' %}{% endif %}');">
+                <div class="pitch-deck-info">
+                    <strong>{{ pitch.title }}</strong> - {{ pitch.pitch_type }}
+                    <p><strong>Genre:</strong> {{ pitch.genre.name }}</p>
+                    <p><strong>Theme:</strong> {{ pitch.theme }}</p>
+                </div>
+            </div>
+        </a>
+    {% empty %}
+        <li class="list-group-item">No pitch decks yet.</li>
+    {% endfor %}
+</ul>
+
+<!-- Collaboration Requests-->
     {% elif profile.user_type == 'Producer' %}
         <h2 class="mt-5">Your Collaboration Requests</h2>
         <ul class="list-group">

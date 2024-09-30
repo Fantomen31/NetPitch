@@ -192,7 +192,6 @@ p.lead {
     justify-content: center;
     align-items: center;
 }
-
 /* ============= Profile Page Styles ============= */
 
 /* Profile header */
@@ -255,23 +254,48 @@ button.btn-purple:hover {
     background-color: #4CAF50; /* Green hover */
 }
 
-/* List styling for pitch decks and collaboration requests */
-ul.list-group {
-    margin-top: 20px;
+/* ============= Pitch Deck Grid Styles ============= */
+
+/* Grid layout */
+.pitch-deck-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
 }
 
-.list-group-item {
-    background-color: white;
-    border: 1px solid #ccc;
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 10px;
+/* Make the whole div clickable */
+.pitch-deck-link {
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.list-group-item a {
-    color: rgba(106, 27, 154, 0.7);
+/* Style for the card */
+.pitch-deck-card {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    height: 300px;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    cursor: pointer;
 }
 
-.list-group-item a:hover {
-    color: #4CAF50;
+/* Add hover effect: zoom and fade */
+.pitch-deck-card:hover {
+    transform: scale(1.05);
+    opacity: 0.8;
+}
+
+/* Style for the text overlay on the image */
+.pitch-deck-info {
+    position: absolute;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    color: white;
+    padding: 10px;
+    text-align: center;
 }

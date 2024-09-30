@@ -6,7 +6,7 @@
 {% block content %}
 <div class="container mt-5">
     <img 
-        src="{% if pitch_deck.image %}{{ pitch_deck.image.url }}{% else %}{% static 'default_pitch_image.jpg' %}{% endif %}" 
+        src="{% if pitch_deck.image %}{{ pitch_deck.image.url }}{% else %}{% static 'images/default_pitch_image.jpg' %}{% endif %}" 
         alt="{{ pitch_deck.title }}" 
         class="img-fluid" 
     />
