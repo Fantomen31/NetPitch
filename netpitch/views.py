@@ -35,7 +35,6 @@ def signup(request):
         'profile_form': profile_form,
     })
 
-# Universal profile view for both Writer and Producer
 @login_required
 def profile_view(request):
     profile = request.user.profile
@@ -43,7 +42,6 @@ def profile_view(request):
     # Get the writer's pitch decks and their corresponding collaboration requests
     if profile.user_type == 'Writer':
         pitch_decks = PitchDeck.objects.filter(writer=profile.user)
-        # Get collaboration requests for all pitch decks owned by the writer
         writer_collaboration_requests = CollaborationRequest.objects.filter(pitch__in=pitch_decks)
     else:
         pitch_decks = None
@@ -60,6 +58,7 @@ def profile_view(request):
         'pitch_decks': pitch_decks,
         'writer_collaboration_requests': writer_collaboration_requests,
         'collaboration_requests': collaboration_requests,
+        'is_profile_page': True,  # Pass this to the template
     })
 
 # Update Profile View
