@@ -1,14 +1,44 @@
 {% extends 'netpitch/base.html' %}
+{% load static %}
+{% load form_tags %}
 
 {% block title %}Submit Pitch Deck{% endblock title %}
 
 {% block content %}
 <div class="container mt-5">
-    <h2>Submit Your Pitch Deck</h2>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-purple btn-block">Submit</button>
-    </form>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center mb-4">Submit Your Pitch Deck</h2>
+            <form method="post" enctype="multipart/form-data" class="form-group">
+                {% csrf_token %}
+                <!-- Add Bootstrap classes to form fields -->
+                <div class="mb-3">
+                    {{ form.title.label_tag }}
+                    {{ form.title|add_class:"form-control" }}
+                </div>
+                <div class="mb-3">
+                    {{ form.genre.label_tag }}
+                    {{ form.genre|add_class:"form-control" }}
+                </div>
+                <div class="mb-3">
+                    {{ form.pitch_type.label_tag }}
+                    {{ form.pitch_type|add_class:"form-control" }}
+                </div>
+                <div class="mb-3">
+                    {{ form.synopsis.label_tag }}
+                    {{ form.synopsis|add_class:"form-control" }}
+                </div>
+                <div class="mb-3">
+                    {{ form.theme.label_tag }}
+                    {{ form.theme|add_class:"form-control" }}
+                </div>
+                <div class="mb-3">
+                    {{ form.image.label_tag }}
+                    {{ form.image|add_class:"form-control" }}
+                </div>
+                <button type="submit" class="btn btn-purple btn-block">Submit</button>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock content %}
