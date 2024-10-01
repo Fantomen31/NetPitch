@@ -168,6 +168,7 @@ def submit_collaboration_request(request, pk):
         'form': form,
         'pitch_deck': pitch_deck,
     })
+
 # View to accept a collaboration request
 @login_required
 def accept_collaboration_request(request, request_id):
@@ -198,31 +199,17 @@ def decline_collaboration_request(request, request_id):
 
     return redirect('profile_view')
 
-# View to clear a collaboration request (Writer's view)
+# View to clear a collaboration request from the profile view
 @login_required
 def clear_collaboration_request(request, request_id):
     collaboration_request = get_object_or_404(CollaborationRequest, id=request_id)
 
-    # Ensure only the writer can clear the request after accepting
-    if request.user.profile == collaboration_request.pitch.writer.profile and collaboration_request.status == 'Accepted':
-        collaboration_request.status = 'Cleared'  # Custom status to hide it from the writer's profile
-        collaboration_request.save()
+    # Allow both writers and producers to clear the request
+    if (request.user.profile == collaboration_request.pitch.writer.profile or
+        request.user.profile == collaboration_request.producer):
+        collaboration_request.delete()
         messages.success(request, 'Collaboration request cleared.')
     else:
         messages.error(request, 'You do not have permission to clear this request.')
-
-    return redirect('profile_view')
-
-# View to delete a collaboration request (Producer's view)
-@login_required
-def delete_collaboration_request(request, request_id):
-    collaboration_request = get_object_or_404(CollaborationRequest, id=request_id)
-
-    # Ensure only the producer who created the request can delete it
-    if request.user.profile == collaboration_request.producer:
-        collaboration_request.delete()
-        messages.success(request, 'Collaboration request deleted.')
-    else:
-        messages.error(request, 'You do not have permission to delete this request.')
 
     return redirect('profile_view')

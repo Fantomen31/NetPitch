@@ -17,5 +17,4 @@ urlpatterns = [
     path('collaboration-request/<int:request_id>/accept/', views.accept_collaboration_request, name='accept_collaboration_request'),
     path('collaboration-request/<int:request_id>/decline/', views.decline_collaboration_request, name='decline_collaboration_request'),
     path('collaboration-request/<int:request_id>/clear/', views.clear_collaboration_request, name='clear_collaboration_request'),
-    path('collaboration-request/<int:request_id>/delete/', views.delete_collaboration_request, name='delete_collaboration_request'),
 ]

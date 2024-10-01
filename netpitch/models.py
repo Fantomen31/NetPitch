@@ -43,12 +43,11 @@ class CollaborationRequest(models.Model):
     STATUS_CHOICES = [
         ('Pending', 'Pending'),
         ('Accepted', 'Accepted'),
-        ('Declined', 'Declined'),
-        ('Cleared', 'Cleared'),
+        ('Declined', 'Declined')
     ]
     
-    pitch = models.ForeignKey('netpitch.PitchDeck', on_delete=models.CASCADE)  
-    producer = models.ForeignKey('netpitch.Profile', on_delete=models.CASCADE)  
+    pitch = models.ForeignKey('netpitch.PitchDeck', on_delete=models.CASCADE)
+    producer = models.ForeignKey('netpitch.Profile', on_delete=models.CASCADE)
     message = models.TextField()
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Pending')
 
