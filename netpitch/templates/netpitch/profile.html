@@ -1,6 +1,6 @@
 {% extends 'netpitch/base.html' %}
 {% load static %}
-{% load form_tags %} 
+{% load form_tags %}
 
 {% block content %}
 <div class="container">
@@ -10,82 +10,106 @@
     <h1>{{ profile.user.username }}</h1>
     <p>{{ profile.bio }}</p>
 
-<!-- If Writer Profile -->
-{% if profile.user_type == 'Writer' %}
+    <!-- If Writer Profile -->
+    {% if profile.user_type == 'Writer' %}
 
-<!-- Update Profile & Submit Pitch Deck Button -->
-<div class="container">
-    <div class="row">
-        <div class="col-12 col-md-6 mb-3">
-            <a href="{% url 'update_profile' %}" class="btn btn-purple btn-block">Update Profile</a>
-        </div>
-        <div class="col-12 col-md-6 mb-3">
-            <a href="{% url 'submit_pitch_deck' %}" class="btn btn-purple btn-block">Submit New Pitch Deck</a>
+    <!-- Update Profile & Submit Pitch Deck Button -->
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-6 mb-3">
+                <a href="{% url 'update_profile' %}" class="btn btn-purple btn-block">Update Profile</a>
+            </div>
+            <div class="col-12 col-md-6 mb-3">
+                <a href="{% url 'submit_pitch_deck' %}" class="btn btn-purple btn-block">Submit New Pitch Deck</a>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Pitch Deck -->
-<h2 class="mt-5">Pitch Decks</h2>
-<div class="pitch-deck-grid">
-    {% for pitch in pitch_decks %}
-        <a href="{% url 'pitch_deck_detail' pitch.id %}" class="pitch-deck-link">
-            <div class="pitch-deck-card" style="background-image: url('{% if pitch.image %}{{ pitch.image.url }}{% else %}{% static 'images/default_pitch_image.jpg' %}{% endif %}')">
-                <div class="pitch-deck-info">
-                    <strong>{{ pitch.title }}</strong> - {{ pitch.pitch_type }}
-                    <p><strong>Genre:</strong> {{ pitch.genre.name }}</p>
-                    <p><strong>Theme:</strong> {{ pitch.theme }}</p>
+    <!-- Pitch Decks -->
+    <h2 class="mt-5">Pitch Decks</h2>
+    <div class="pitch-deck-grid">
+        {% for pitch in pitch_decks %}
+            <a href="{% url 'pitch_deck_detail' pitch.id %}" class="pitch-deck-link">
+                <div class="pitch-deck-card" style="background-image: url('{% if pitch.image %}{{ pitch.image.url }}{% else %}{% static 'images/default_pitch_image.jpg' %}{% endif %}')">
+                    <div class="pitch-deck-info">
+                        <strong>{{ pitch.title }}</strong> - {{ pitch.pitch_type }}
+                        <p><strong>Genre:</strong> {{ pitch.genre.name }}</p>
+                        <p><strong>Theme:</strong> {{ pitch.theme }}</p>
+                    </div>
                 </div>
-            </div>
-        </a>
-    {% empty %}
-        <li class="list-group-item">No pitch decks yet.</li>
-    {% endfor %}
-</ul>
- <!-- Show collaboration requests for the writer's pitch decks -->
- <h2 class="mt-5">Collaboration Requests for Your Pitch Decks</h2>
- <ul class="list-group">
-     {% for request in writer_collaboration_requests %}
-         <li class="list-group-item d-flex justify-content-between align-items-center">
-             <div>
-                 <strong>Pitch Deck: {{ request.pitch.title }}</strong> <br>
-                 <p><strong>Producer:</strong> {{ request.producer.user.username }}</p>
-                 <p><strong>Message:</strong> {{ request.message }}</p>
-             </div>
-             <div>
-                 <a href="{% url 'accept_collaboration_request' request.id %}" class="btn btn-success btn-sm">Accept</a>
-                 <a href="{% url 'decline_collaboration_request' request.id %}" class="btn btn-danger btn-sm">Decline</a>
-             </div>
-         </li>
-     {% empty %}
-         <li class="list-group-item">No collaboration requests yet.</li>
-     {% endfor %}
- </ul>
+            </a>
+        {% empty %}
+            <li class="list-group-item">No pitch decks yet.</li>
+        {% endfor %}
+    </div>
 
-<!-- If Producer Profile-->
-    {% elif profile.user_type == 'Producer' %}
-
-<!-- Update Profile -->
-<div class="container-justify-center">
-        <div class="col-md-jsutify-center">
-            <a href="{% url 'update_profile' %}" class="btn btn-purple btn-block">Update Profile</a>
-        </div>
-</div>
-<!-- Collaboration Requests-->
-        <h2 class="mt-5">Your Collaboration Requests</h2>
-        <ul class="list-group">
-            {% for request in collaboration_requests %}
+    <!-- Collaboration Requests for Writer's Pitch Decks -->
+    <h2 class="mt-5">Collaboration Requests for Your Pitch Decks</h2>
+    <ul class="list-group">
+        {% for request in writer_collaboration_requests %}
+            {% if request.status != 'Declined' %}
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div>
-                        <strong>{{ request.pitch.title }}</strong> 
-                        <p class="mb-1"><strong>Status:</strong> {{ request.status }}</p>
+                        <strong>Pitch Deck: {{ request.pitch.title }}</strong> <br>
+                        <p><strong>Producer:</strong> {{ request.producer.user.username }}</p>
+                        <p><strong>Message:</strong> {{ request.message }}</p>
+                        <p><strong>Status:</strong> {{ request.status }}</p>
                     </div>
-                    <a href="{% url 'pitch_deck_detail' request.pitch.id %}" class="btn btn-outline-info btn-sm">View Pitch</a>
+                    <div>
+                        {% if request.status == 'Pending' %}
+                            <!-- Show accept and decline buttons only if the request is pending -->
+                            <a href="{% url 'accept_collaboration_request' request.id %}" class="btn btn-success btn-sm">Accept</a>
+                            <a href="{% url 'decline_collaboration_request' request.id %}" class="btn btn-danger btn-sm">Decline</a>
+                        {% elif request.status == 'Accepted' %}
+                            <!-- Clear button for accepted requests -->
+                            <a href="{% url 'clear_collaboration_request' request.id %}" class="btn btn-warning btn-sm">Clear</a>
+                        {% endif %}
+                    </div>
+                </li>
+            {% endif %}
+        {% empty %}
+            <li class="list-group-item">No collaboration requests received yet.</li>
+        {% endfor %}
+    </ul>
+
+    {% elif profile.user_type == 'Producer' %}
+
+    <!-- Producer Profile: Update Profile -->
+    <div class="container-justify-center">
+        <div class="col-md-justify-center">
+            <a href="{% url 'update_profile' %}" class="btn btn-purple btn-block">Update Profile</a>
+        </div>
+    </div>
+
+    <!-- Producer's View: Sent Collaboration Requests -->
+    <div class="container mt-5">
+        <h2>Your Sent Collaboration Requests</h2>
+        <ul class="list-group">
+            {% for request in collaboration_requests %}
+                <li class="list-group-item d-flex justify-content-between align-items-center {% if request.status == 'Declined' %}bg-danger{% endif %}">
+                    <div>
+                        <strong>Pitch Deck: {{ request.pitch.title }}</strong>
+                        <p class="mb-1"><strong>Status:</strong>
+                            {% if request.status == 'Pending' %}
+                                Pending - Waiting for writer's response
+                            {% elif request.status == 'Accepted' %}
+                                Accepted - Congratulations!
+                            {% else %}
+                                Declined - Sorry, this collaboration was not accepted.
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div>
+                        <a href="{% url 'pitch_deck_detail' request.pitch.id %}" class="btn {% if request.status == 'Accepted' %}btn-success{% else %}btn-outline-info{% endif %} btn-sm">View Pitch</a>
+                        <a href="{% url 'delete_collaboration_request' request.id %}" class="btn btn-danger btn-sm">Delete</a>
+                    </div>
                 </li>
             {% empty %}
-                <li class="list-group-item">No collaboration requests yet.</li>
+                <li class="list-group-item">No collaboration requests sent yet.</li>
             {% endfor %}
         </ul>
+    </div>
+
     {% endif %}
 </div>
-{% endblock %}
+{% endblock content %}

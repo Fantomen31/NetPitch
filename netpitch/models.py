@@ -44,6 +44,7 @@ class CollaborationRequest(models.Model):
         ('Pending', 'Pending'),
         ('Accepted', 'Accepted'),
         ('Declined', 'Declined'),
+        ('Cleared', 'Cleared'),
     ]
     
     pitch = models.ForeignKey('netpitch.PitchDeck', on_delete=models.CASCADE)  

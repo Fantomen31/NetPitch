@@ -168,27 +168,61 @@ def submit_collaboration_request(request, pk):
         'form': form,
         'pitch_deck': pitch_deck,
     })
-
+# View to accept a collaboration request
 @login_required
 def accept_collaboration_request(request, request_id):
     collaboration_request = get_object_or_404(CollaborationRequest, id=request_id)
     
-    # Mark this request as accepted or handle the logic you want
-    # You can add a field like "status" to the CollaborationRequest model to track this
-    collaboration_request.status = 'Accepted'
-    collaboration_request.save()
-    
-    messages.success(request, f'Collaboration request for "{collaboration_request.pitch.title}" has been accepted.')
+    # Ensure only the writer can accept the request
+    if request.user.profile == collaboration_request.pitch.writer.profile:
+        collaboration_request.status = 'Accepted'
+        collaboration_request.save()
+        messages.success(request, 'Collaboration request accepted.')
+    else:
+        messages.error(request, 'You do not have permission to accept this request.')
+
     return redirect('profile_view')
 
-
+# View to decline a collaboration request
 @login_required
 def decline_collaboration_request(request, request_id):
     collaboration_request = get_object_or_404(CollaborationRequest, id=request_id)
-    
-    # Mark this request as declined or delete it from the database
-    collaboration_request.status = 'Declined'
-    collaboration_request.save()
 
-    messages.success(request, f'Collaboration request for "{collaboration_request.pitch.title}" has been declined.')
+    # Ensure only the writer can decline the request
+    if request.user.profile == collaboration_request.pitch.writer.profile:
+        collaboration_request.status = 'Declined'
+        collaboration_request.save()
+        messages.success(request, 'Collaboration request declined.')
+    else:
+        messages.error(request, 'You do not have permission to decline this request.')
+
+    return redirect('profile_view')
+
+# View to clear a collaboration request (Writer's view)
+@login_required
+def clear_collaboration_request(request, request_id):
+    collaboration_request = get_object_or_404(CollaborationRequest, id=request_id)
+
+    # Ensure only the writer can clear the request after accepting
+    if request.user.profile == collaboration_request.pitch.writer.profile and collaboration_request.status == 'Accepted':
+        collaboration_request.status = 'Cleared'  # Custom status to hide it from the writer's profile
+        collaboration_request.save()
+        messages.success(request, 'Collaboration request cleared.')
+    else:
+        messages.error(request, 'You do not have permission to clear this request.')
+
+    return redirect('profile_view')
+
+# View to delete a collaboration request (Producer's view)
+@login_required
+def delete_collaboration_request(request, request_id):
+    collaboration_request = get_object_or_404(CollaborationRequest, id=request_id)
+
+    # Ensure only the producer who created the request can delete it
+    if request.user.profile == collaboration_request.producer:
+        collaboration_request.delete()
+        messages.success(request, 'Collaboration request deleted.')
+    else:
+        messages.error(request, 'You do not have permission to delete this request.')
+
     return redirect('profile_view')
