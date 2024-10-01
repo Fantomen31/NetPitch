@@ -42,11 +42,30 @@
         <li class="list-group-item">No pitch decks yet.</li>
     {% endfor %}
 </ul>
+ <!-- Show collaboration requests for the writer's pitch decks -->
+ <h2 class="mt-5">Collaboration Requests for Your Pitch Decks</h2>
+ <ul class="list-group">
+     {% for request in writer_collaboration_requests %}
+         <li class="list-group-item d-flex justify-content-between align-items-center">
+             <div>
+                 <strong>Pitch Deck: {{ request.pitch.title }}</strong> <br>
+                 <p><strong>Producer:</strong> {{ request.producer.user.username }}</p>
+                 <p><strong>Message:</strong> {{ request.message }}</p>
+             </div>
+             <div>
+                 <a href="{% url 'accept_collaboration_request' request.id %}" class="btn btn-success btn-sm">Accept</a>
+                 <a href="{% url 'decline_collaboration_request' request.id %}" class="btn btn-danger btn-sm">Decline</a>
+             </div>
+         </li>
+     {% empty %}
+         <li class="list-group-item">No collaboration requests yet.</li>
+     {% endfor %}
+ </ul>
 
 <!-- If Producer Profile-->
     {% elif profile.user_type == 'Producer' %}
 
-<!-- Update Profile & Submit Pitch Deck Button -->
+<!-- Update Profile -->
 <div class="container-justify-center">
         <div class="col-md-jsutify-center">
             <a href="{% url 'update_profile' %}" class="btn btn-purple btn-block">Update Profile</a>

@@ -40,9 +40,16 @@ class PitchDeck(models.Model):
         return f"{self.title} ({self.pitch_type})"
 
 class CollaborationRequest(models.Model):
-    pitch = models.ForeignKey('netpitch.PitchDeck', on_delete=models.CASCADE)  # Use string reference for PitchDeck
-    producer = models.ForeignKey('netpitch.Profile', on_delete=models.CASCADE)  # Use string reference for Profile
+    STATUS_CHOICES = [
+        ('Pending', 'Pending'),
+        ('Accepted', 'Accepted'),
+        ('Declined', 'Declined'),
+    ]
+    
+    pitch = models.ForeignKey('netpitch.PitchDeck', on_delete=models.CASCADE)  
+    producer = models.ForeignKey('netpitch.Profile', on_delete=models.CASCADE)  
     message = models.TextField()
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Pending')
 
     def __str__(self):
         return f"Collaboration request for {self.pitch.title} by {self.producer.user.username}"

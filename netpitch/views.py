@@ -39,14 +39,26 @@ def signup(request):
 @login_required
 def profile_view(request):
     profile = request.user.profile
-    # Get the user's pitch decks if they are a writer
-    pitch_decks = PitchDeck.objects.filter(writer=profile.user) if profile.user_type == 'Writer' else None
+
+    # Get the writer's pitch decks and their corresponding collaboration requests
+    if profile.user_type == 'Writer':
+        pitch_decks = PitchDeck.objects.filter(writer=profile.user)
+        # Get collaboration requests for all pitch decks owned by the writer
+        writer_collaboration_requests = CollaborationRequest.objects.filter(pitch__in=pitch_decks)
+    else:
+        pitch_decks = None
+        writer_collaboration_requests = None
+
     # Get the producer's collaboration requests if they are a producer
-    collaboration_requests = CollaborationRequest.objects.filter(producer=profile) if profile.user_type == 'Producer' else None
+    if profile.user_type == 'Producer':
+        collaboration_requests = CollaborationRequest.objects.filter(producer=profile)
+    else:
+        collaboration_requests = None
 
     return render(request, 'netpitch/profile.html', {
         'profile': profile,
         'pitch_decks': pitch_decks,
+        'writer_collaboration_requests': writer_collaboration_requests,
         'collaboration_requests': collaboration_requests,
     })
 
@@ -156,3 +168,27 @@ def submit_collaboration_request(request, pk):
         'form': form,
         'pitch_deck': pitch_deck,
     })
+
+@login_required
+def accept_collaboration_request(request, request_id):
+    collaboration_request = get_object_or_404(CollaborationRequest, id=request_id)
+    
+    # Mark this request as accepted or handle the logic you want
+    # You can add a field like "status" to the CollaborationRequest model to track this
+    collaboration_request.status = 'Accepted'
+    collaboration_request.save()
+    
+    messages.success(request, f'Collaboration request for "{collaboration_request.pitch.title}" has been accepted.')
+    return redirect('profile_view')
+
+
+@login_required
+def decline_collaboration_request(request, request_id):
+    collaboration_request = get_object_or_404(CollaborationRequest, id=request_id)
+    
+    # Mark this request as declined or delete it from the database
+    collaboration_request.status = 'Declined'
+    collaboration_request.save()
+
+    messages.success(request, f'Collaboration request for "{collaboration_request.pitch.title}" has been declined.')
+    return redirect('profile_view')

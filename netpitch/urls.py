@@ -14,4 +14,6 @@ urlpatterns = [
     path('submit-pitch-deck/', views.submit_pitch_deck, name='submit_pitch_deck'),
     path('pitch-deck/<int:pk>/', views.pitch_deck_detail, name='pitch_deck_detail'),
     path('pitch-deck/<int:pk>/collaboration-request/', views.submit_collaboration_request, name='submit_collaboration_request'),
+     path('collaboration-request/<int:request_id>/accept/', views.accept_collaboration_request, name='accept_collaboration_request'),
+    path('collaboration-request/<int:request_id>/decline/', views.decline_collaboration_request, name='decline_collaboration_request'),
 ]
