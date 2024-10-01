@@ -3,55 +3,56 @@
 {% load form_tags %}
 
 {% block content %}
-<div class="container mt-5 mb-5">
+<div class="container container mt-5 mb-5">
+    
     <!-- Grid for Profile and Pitch Decks -->
-    <div class="row">
-        <!-- Profile Section -->
-        <div class="col-12 col-md-6">
-            <div class="card p-4 mb-4">
-                <div class="profile-header text-center">
-                    <img class="profile-image" src="{% if profile.profile_image %}{{ profile.profile_image.url }}{% else %}{% static 'default.jpg' %}{% endif %}" alt="{{ profile.user.username }}">
-                </div>
-                <h1 class="text-center">{{ profile.user.username }}</h1>
-                <p class="text-center">{{ profile.bio }}</p>
-                <div class="text-center">
-                    <a href="{% url 'update_profile' %}" class="btn btn-purple btn-block">Update Profile</a>
-                </div>
+<div class="row">
+    <!-- Profile Section -->
+    <div class="col-12 col-md-6">
+        <div class="card card-equal p-4 mb-4">
+            <div class="profile-header text-center">
+                <img class="profile-image" src="{% if profile.profile_image %}{{ profile.profile_image.url }}{% else %}{% static 'default.jpg' %}{% endif %}" alt="{{ profile.user.username }}">
             </div>
-        </div>
-
-        <!-- Pitch Decks Section (Writer) or Link to Pitch Decks (Producer) -->
-        <div class="col-12 col-md-6">
-            <div class="card p-4 mb-4">
-                {% if profile.user_type == 'Writer' %}
-                    <h2>Pitch Decks</h2>
-                    <div class="text-center mb-3">
-                        <a href="{% url 'submit_pitch_deck' %}" class="btn btn-purple btn-block">Submit New Pitch Deck</a>
-                    </div>
-                    <div class="pitch-deck-grid">
-                        {% for pitch in pitch_decks %}
-                            <a href="{% url 'pitch_deck_detail' pitch.id %}" class="pitch-deck-link">
-                                <div class="pitch-deck-card" style="background-image: url('{% if pitch.image %}{{ pitch.image.url }}{% else %}{% static 'images/default_pitch_image.jpg' %}{% endif %}')">
-                                    <div class="pitch-deck-info">
-                                        <strong>{{ pitch.title }}</strong> - {{ pitch.pitch_type }}
-                                        <p><strong>Genre:</strong> {{ pitch.genre.name }}</p>
-                                        <p><strong>Theme:</strong> {{ pitch.theme }}</p>
-                                    </div>
-                                </div>
-                            </a>
-                        {% empty %}
-                            <li class="list-group-item">No pitch decks yet.</li>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    <h2>Explore Pitch Decks</h2>
-                    <div class="text-center mt-4">
-                        <a href="{% url 'home' %}" class="btn btn-purple btn-block">View All Pitch Decks</a>
-                    </div>
-                {% endif %}
+            <h1 class="text-center">{{ profile.user.username }}</h1>
+            <p class="text-center">{{ profile.bio }}</p>
+            <div class="text-center">
+                <a href="{% url 'update_profile' %}" class="btn btn-purple btn-block">Update Profile</a>
             </div>
         </div>
     </div>
+
+    <!-- Pitch Decks Section (Writer) or Link to Pitch Decks (Producer) -->
+    <div class="col-12 col-md-6">
+        <div class="card card-equal p-4 mb-4">
+            {% if profile.user_type == 'Writer' %}
+                <h2>Pitch Decks</h2>
+                <div class="text-center mb-3">
+                    <a href="{% url 'submit_pitch_deck' %}" class="btn btn-purple btn-block">Submit New Pitch Deck</a>
+                </div>
+                <div class="pitch-deck-grid">
+                    {% for pitch in pitch_decks %}
+                        <a href="{% url 'pitch_deck_detail' pitch.id %}" class="pitch-deck-link">
+                            <div class="pitch-deck-card" style="background-image: url('{% if pitch.image %}{{ pitch.image.url }}{% else %}{% static 'images/default_pitch_image.jpg' %}{% endif %}')">
+                                <div class="pitch-deck-info">
+                                    <strong>{{ pitch.title }}</strong> - {{ pitch.pitch_type }}
+                                    <p><strong>Genre:</strong> {{ pitch.genre.name }}</p>
+                                    <p><strong>Theme:</strong> {{ pitch.theme }}</p>
+                                </div>
+                            </div>
+                        </a>
+                    {% empty %}
+                        <li class="list-group-item">No pitch decks yet.</li>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <h2>Explore Pitch Decks</h2>
+                <div class="text-center mt-4">
+                    <a href="{% url 'home' %}" class="btn btn-purple btn-block">View All Pitch Decks</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
 
     <!-- Full-width row for Collaboration Requests -->
     <div class="row mt-5">
