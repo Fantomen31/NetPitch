@@ -1,22 +1,51 @@
 {% extends 'netpitch/base.html' %}
 {% load static %}
+{% load form_tags %}
 
 {% block title %}Edit Pitch Deck{% endblock title %}
 
 {% block content %}
-    <h2>Edit {{ pitch_deck.title }}</h2>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <div class="container">
-            <div class="row">
-        <div class="col-12 col-md-6 mb-3">
-            <button type="submit" class="btn btn-purple">Save</button>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center mb-4">Edit {{ pitch_deck.title }}</h2>
+            <form method="post" enctype="multipart/form-data" class="form-group">
+                {% csrf_token %}
+                <!-- Add Bootstrap classes to form fields -->
+                <div class="mb-3">
+                    {{ form.title.label_tag }}
+                    {{ form.title|add_class:"form-control" }}
+                </div>
+                <div class="mb-3">
+                    {{ form.genre.label_tag }}
+                    {{ form.genre|add_class:"form-control" }}
+                </div>
+                <div class="mb-3">
+                    {{ form.pitch_type.label_tag }}
+                    {{ form.pitch_type|add_class:"form-control" }}
+                </div>
+                <div class="mb-3">
+                    {{ form.synopsis.label_tag }}
+                    {{ form.synopsis|add_class:"form-control" }}
+                </div>
+                <div class="mb-3">
+                    {{ form.theme.label_tag }}
+                    {{ form.theme|add_class:"form-control" }}
+                </div>
+                <div class="mb-3">
+                    {{ form.image.label_tag }}
+                    {{ form.image|add_class:"form-control" }}
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6 mb-3">
+                        <button type="submit" class="btn btn-purple btn-block">Save</button>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                        <a href="{% url 'pitch_deck_detail' pitch_deck.id %}" class="btn btn-purple btn-block">Cancel</a>
+                    </div>
+                </div>
+            </form>
         </div>
-        <div class="col-12 col-md-6 mb-3">
-            <a href="{% url 'pitch_deck_detail' pitch_deck.id %}" class="btn btn-purple btn-block">Cancel</a>
-        </div>
-    </form>
     </div>
 </div>
 {% endblock content %}
