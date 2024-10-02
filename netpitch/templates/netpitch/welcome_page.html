@@ -26,7 +26,8 @@
                     <div class="pitch-deck-card" 
                          style="background-image: url('{% if pitch.image %}{{ pitch.image.url }}{% else %}{% static 'images/default_pitch_image.jpg' %}{% endif %}')">
                         <div class="pitch-deck-info">
-                            <strong>{{ pitch.title }}</strong> - {{ pitch.pitch_type }}
+                            <strong>{{ pitch.title }}</strong><strong> - {{ pitch.pitch_type }}</strong>
+                            <p><strong>By:</strong> {{ pitch.writer.username }}</p>
                             <p><strong>Genre:</strong> {{ pitch.genre.name }}</p>
                             <p><strong>Theme:</strong> {{ pitch.theme }}</p>
                         </div>
