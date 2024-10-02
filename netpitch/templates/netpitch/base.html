@@ -55,6 +55,22 @@
             </nav>
         </header>
 
+        <!-- Display Messages (Alerts) -->
+        <div class="container mt-3">
+            {% if messages %}
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show text-center" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
         <!-- Conditional main container based on profile view -->
         {% if not is_profile_page %}
         <main class="container mt-5 mb-5 flex-grow-1">

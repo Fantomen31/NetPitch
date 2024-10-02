@@ -24,8 +24,11 @@ def signup(request):
 
             # Log in the user after account creation
             login(request, user)
+            messages.success(request, 'Account created successfully! Welcome to NetPitch.')
 
             return redirect('profile_view')  # Redirect to profile after signup
+        else:
+            messages.error(request, 'There was an error in your sign-up form. Please correct the errors below.')
     else:
         user_form = UserRegistrationForm()
         profile_form = ProfileCreationForm()
@@ -70,8 +73,12 @@ def update_profile(request):
         form = ProfileForm(request.POST, request.FILES, instance=profile)  # Bind form with submitted data
         if form.is_valid():
             form.save()  # Save the updated profile
+            messages.success(request, 'Your profile has been updated successfully.')
             return redirect('profile_view')  # Redirect to the profile view after successful update
+        else:
+            messages.error(request, 'There was an error updating your profile. Please try again.')
     else:
+        messages.warning(request, 'Are you sure you want to update your profile?')
         form = ProfileForm(instance=profile)  # Pre-fill form with user's current profile data
 
     return render(request, 'netpitch/update_profile.html', {'form': form})
@@ -100,12 +107,14 @@ def submit_pitch_deck(request):
             pitch_deck = form.save(commit=False)
             pitch_deck.writer = request.user  # Link to the writer's profile
             pitch_deck.save()
+            messages.success(request, 'Pitch deck submitted successfully!')
             return redirect('pitch_deck_detail', pk=pitch_deck.pk)  # Redirect to details page
+        else:
+            messages.error(request, 'There was an error submitting the pitch deck. Please correct the errors below.')
     else:
         form = PitchDeckForm()
     
     return render(request, 'netpitch/submit_pitch_deck.html', {'form': form})
-
 
 # Edit Pitch Deck View
 @login_required
@@ -116,8 +125,12 @@ def edit_pitch_deck(request, pk):
         form = PitchDeckForm(request.POST, request.FILES, instance=pitch_deck)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Pitch deck updated successfully!')
             return redirect('profile_view')
+        else:
+            messages.error(request, 'There was an error updating the pitch deck. Please try again.')
     else:
+        messages.warning(request, 'Are you sure you want to update this pitch deck?')
         form = PitchDeckForm(instance=pitch_deck)
 
     return render(request, 'netpitch/edit_pitch_deck.html', {'form': form, 'pitch_deck': pitch_deck})
@@ -129,18 +142,20 @@ def delete_pitch_deck(request, pk):
 
     if request.method == 'POST':
         pitch_deck.delete()
+        messages.success(request, 'Pitch deck deleted successfully.')
         return redirect('profile_view')  # Redirect to profile after deletion
+    else:
+        messages.warning(request, 'Are you sure you want to delete this pitch deck?')
 
     return render(request, 'netpitch/pitch_deck_detail.html', {'pitch_deck': pitch_deck})
 
-#PitchDeck View
+# PitchDeck View
 @login_required
 def pitch_deck_detail(request, pk):
     pitch_deck = get_object_or_404(PitchDeck, pk=pk)
     return render(request, 'netpitch/pitch_deck_detail.html', {'pitch_deck': pitch_deck})
 
-
-#Collaboration request View
+# Collaboration request View
 @login_required
 def submit_collaboration_request(request, pk):
     pitch_deck = get_object_or_404(PitchDeck, pk=pk)
@@ -148,6 +163,7 @@ def submit_collaboration_request(request, pk):
 
     # Ensure only producers can submit collaboration requests
     if profile.user_type != 'Producer':
+        messages.error(request, 'You must be a Producer to submit a collaboration request.')
         return redirect('home')  # Redirect to home if the user is not a producer
 
     if request.method == 'POST':
@@ -160,6 +176,8 @@ def submit_collaboration_request(request, pk):
 
             messages.success(request, 'Your collaboration request has been submitted successfully!')
             return redirect('pitch_deck_detail', pk=pitch_deck.pk)  # Redirect back to the pitch deck detail page
+        else:
+            messages.error(request, 'There was an error submitting your collaboration request.')
     else:
         form = CollaborationRequestForm()
 

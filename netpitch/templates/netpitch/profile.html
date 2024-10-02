@@ -76,7 +76,33 @@
                                 <div>
                                     {% if request.status == 'Pending' %}
                                         <a href="{% url 'accept_collaboration_request' request.id %}" class="btn btn-success btn-sm">Accept</a>
-                                        <a href="{% url 'decline_collaboration_request' request.id %}" class="btn btn-danger btn-sm">Decline</a>
+                                        
+                                        <!-- Trigger Modal for Decline Confirmation -->
+                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#declineModal-{{ request.id }}">
+                                            Decline
+                                        </button>
+
+                                        <!-- Modal for Decline Confirmation -->
+                                        <div class="modal fade" id="declineModal-{{ request.id }}" tabindex="-1" aria-labelledby="declineModalLabel-{{ request.id }}" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="declineModalLabel-{{ request.id }}">Confirm Decline</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Are you sure you want to decline this collaboration request?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                        <form action="{% url 'decline_collaboration_request' request.id %}" method="post">
+                                                            {% csrf_token %}
+                                                            <button type="submit" class="btn btn-danger">Yes, Decline</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     {% else %}
                                         <a href="{% url 'clear_collaboration_request' request.id %}" class="btn btn-warning btn-sm">Clear</a>
                                     {% endif %}
@@ -110,4 +136,8 @@
         </div>
     </div>
 </div>
+
+<!-- Include Bootstrap's JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
 {% endblock content %}
