@@ -27,9 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True  
+DEBUG = False  
 
-ALLOWED_HOSTS = ['8000-fantomen31-netpitch-y8c92sz8q4w.ws-eu116.gitpod.io','.herokuapp.com']
+ALLOWED_HOSTS = ['8000-fantomen31-netpitch-y8c92sz8q4w.ws-eu116.gitpod.io','git.heroku.com/netpitch.git.herokuapp.com']
 
 
 CSRF_TRUSTED_ORIGINS = [
