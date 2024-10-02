@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from cloudinary.models import CloudinaryField
 
 class Genre(models.Model):
     name = models.CharField(max_length=100)
@@ -16,7 +17,7 @@ class Profile(models.Model):
     
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(blank=True)
-    profile_image = models.ImageField(upload_to='profile_images/', blank=True)
+    profile_image = CloudinaryField('image', default='placeholder', blank=True)
     user_type = models.CharField(max_length=10, choices=USER_TYPE_CHOICES)
 
     def __str__(self):
@@ -34,7 +35,7 @@ class PitchDeck(models.Model):
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE, blank=True, null=True)
     pitch_type = models.CharField(max_length=20, choices=TYPE_CHOICES)
     writer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="pitch_decks")
-    image = models.ImageField(upload_to='pitch_images/', blank=True, null=True)
+    image = CloudinaryField('image', blank=True, null=True)
 
     def __str__(self):
         return f"{self.title} ({self.pitch_type})"
