@@ -16,7 +16,7 @@ header.sticky-top {
     background: linear-gradient(90deg, rgba(106, 27, 154, 0.3), rgba(74, 0, 224, 0.3));
     -webkit-background-clip: text;
     color: rgba(106, 27, 154);
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+   
 }
 
 /* Base background color for the entire site */
