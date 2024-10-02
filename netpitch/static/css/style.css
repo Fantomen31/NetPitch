@@ -13,29 +13,22 @@ header.sticky-top {
     font-family: 'Poppins', sans-serif;
     font-size: 2.8rem; /* Slightly adjust to be smaller */
     font-weight: 700;
-    background: linear-gradient(90deg, rgba(106, 27, 154, 0.3), rgba(74, 0, 224, 0.3)); /* Lighter transparent purple gradient */
+    background: linear-gradient(90deg, rgba(106, 27, 154, 0.3), rgba(74, 0, 224, 0.3));
     -webkit-background-clip: text;
-    color: black;
+    color: rgba(106, 27, 154);
     text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
 }
 
 /* Base background color for the entire site */
 body {
-    background-color: #464343; /* Dark grey background */
+    background-color: rgb(148, 215, 251);
 }
 
 /* Header and footer adjustments */
 .bg-purple {
-    background-color: rgba(171, 68, 234, 0.7); /* Lighter transparent purple background */
+    background-color: rgb(229, 133, 8);
 }
 
-.border-bottom-green {
-    border-bottom: 4px solid #4CAF50;
-}
-
-.border-top-green {
-    border-top: 4px solid #4CAF50;
-}
 
 /* Navbar link styles */
 .navbar .nav-link {
@@ -44,7 +37,7 @@ body {
 }
 
 .navbar .nav-link:hover {
-    color: #4CAF50;
+    color: rgba(106, 27, 154);
 }
 
 /* Footer text */
@@ -67,17 +60,6 @@ main {
     margin-bottom: 30px;
 }
 
-.profile-header h1 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 2.5rem;
-    font-weight: 600;
-    color: rgba(74, 0, 224, 0.9);
-}
-
-.profile-header p {
-    font-size: 1.2rem;
-    color: #333;
-}
 
 .profile-image {
     max-width: 150px;
@@ -98,9 +80,9 @@ button.btn-purple, button.btn-delete {
     transition: background-color 0.3s ease;
 }
 
-/* Green hover for purple button */
+/* Orange hover for purple button */
 button.btn-purple:hover {
-    background-color: #4CAF50; /* Green hover */
+    background-color: rgb(229, 133, 8);
 }
 
 /* Red hover for delete button */
@@ -222,7 +204,7 @@ p.lead {
 }
 
 .btn-purple:hover {
-    background-color: #4CAF50; /* Green hover */
+    background-color: rgb(229, 133, 8);
 }
 
 /* ============= Custom Spacing for the Main Content Area ============= */
