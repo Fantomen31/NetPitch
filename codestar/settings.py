@@ -29,12 +29,14 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False  
 
-ALLOWED_HOSTS = ['8000-fantomen31-netpitch-y8c92sz8q4w.ws-eu116.gitpod.io','git.heroku.com/netpitch.git.herokuapp.com']
+ALLOWED_HOSTS = ['8000-fantomen31-netpitch-y8c92sz8q4w.ws-eu116.gitpod.io',
+                'netpitch-4fea66f5e2b7.herokuapp.com']
 
 
 CSRF_TRUSTED_ORIGINS = [
     'https://*.gitpod.io',
-    'https://8000-fantomen31-netpitch-y8c92sz8q4w.ws-eu116.gitpod.io',  # Add your specific Gitpod URL here
+    'https://8000-fantomen31-netpitch-y8c92sz8q4w.ws-eu116.gitpod.io',
+    'https://netpitch-4fea66f5e2b7.herokuapp.com',  # Add your specific Gitpod URL here
 ]
 
 # Application definition
