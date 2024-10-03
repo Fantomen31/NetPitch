@@ -11,6 +11,7 @@
             <h2 class="text-center mb-4">Submit Collaboration Request for "{{ pitch_deck.title }}"</h2>
             <form method="post" class="form-group">
                 {% csrf_token %}
+                
                 <!-- Add Bootstrap classes to form fields -->
                 <div class="mb-3">
                     {{ form.message.label_tag }}

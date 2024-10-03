@@ -3,11 +3,14 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Profile, PitchDeck, CollaborationRequest
 
+
 class CustomUserCreationForm(UserCreationForm):
     USER_TYPE_CHOICES = [
         ('Writer', 'Writer'),
         ('Producer', 'Producer'),
     ]
+
+    email = forms.EmailField(required=True)
 
     user_type = forms.ChoiceField(choices=USER_TYPE_CHOICES, required=True)
 
@@ -17,11 +20,15 @@ class CustomUserCreationForm(UserCreationForm):
 
     def save(self, commit=True):
         user = super().save(commit=False)
+        user.email = self.cleaned_data['email'] 
         if commit:
             user.save()
-            profile = Profile.objects.create(user=user, user_type=self.cleaned_data['user_type'])
+            profile = Profile.objects.create(
+                user=user, user_type=self.cleaned_data['user_type']
+            )
             profile.save()
         return user
+
 
 class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
@@ -29,6 +36,7 @@ class UserRegistrationForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password']
+
 
 class ProfileCreationForm(forms.ModelForm):
     class Meta:
@@ -41,6 +49,7 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = ['bio', 'profile_image']
 
+
 class PitchDeckForm(forms.ModelForm):
     class Meta:
         model = PitchDeck
@@ -50,10 +59,13 @@ class PitchDeckForm(forms.ModelForm):
             'theme': forms.TextInput(attrs={'placeholder': 'Enter the theme'}),
         }
 
+
 class CollaborationRequestForm(forms.ModelForm):
     class Meta:
         model = CollaborationRequest
-        fields = ['message']  
+        fields = ['message']
         widgets = {
-            'message': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Enter your message to the writer'}),
+            'message': forms.Textarea(
+                attrs={'rows': 4, 'placeholder': 'Enter your message to the writer'}
+            ),
         }
