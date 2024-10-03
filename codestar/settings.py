@@ -15,16 +15,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True  
+DEBUG = True
 
-ALLOWED_HOSTS = ['8000-fantomen31-netpitch-y8c92sz8q4w.ws-eu116.gitpod.io',
-                'netpitch-4fea66f5e2b7.herokuapp.com']
+ALLOWED_HOSTS = [
+    '8000-fantomen31-netpitch-y8c92sz8q4w.ws-eu116.gitpod.io',
+    'netpitch-4fea66f5e2b7.herokuapp.com',
+]
 
 
 CSRF_TRUSTED_ORIGINS = [
     'https://*.gitpod.io',
     'https://8000-fantomen31-netpitch-y8c92sz8q4w.ws-eu116.gitpod.io',
-    'https://netpitch-4fea66f5e2b7.herokuapp.com',  # Add your specific Gitpod URL here
+    'https://netpitch-4fea66f5e2b7.herokuapp.com',
 ]
 
 # Application definition
@@ -100,10 +102,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-#Login redirectory. 
-
-LOGIN_REDIRECT_URL = 'profile_view'  # or whatever page you want to redirect to after login
-LOGOUT_REDIRECT_URL = 'welcome_page'  # redirect after logout
+# Login redirect URL
+LOGIN_REDIRECT_URL = 'profile_view'  # Redirect after login
+LOGOUT_REDIRECT_URL = 'welcome_page'  # Redirect after logout
 
 
 # Internationalization
@@ -140,3 +141,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+

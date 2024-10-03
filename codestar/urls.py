@@ -16,17 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from netpitch import views as netpitch_views
 from django.conf import settings
 from django.conf.urls.static import static
 
 
 urlpatterns = [
-    path('', include('netpitch.urls')), # Include netpitch app URLs
+    path('', include('netpitch.urls')),  # Include netpitch app URLs
     path('admin/', admin.site.urls),
     path('summernote/', include('django_summernote.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),  # Includes login and signup views
-] 
+    path(
+        'accounts/', include('django.contrib.auth.urls')
+    ),  # Includes login and signup views
+]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
