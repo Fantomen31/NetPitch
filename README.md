@@ -259,3 +259,99 @@ Once NetPitch is set up and running, both writers and producers can interact wit
 To see the platform in action, visit the live demo of NetPitch [here](https://netpitch-4fea66f5e2b7.herokuapp.com/). 
 - **Sign up** as a writer or producer to explore the full functionality of the platform.
 - **Test Features**: Submit a pitch deck, request collaborations, and manage your profile just as you would in a real-world setting.
+
+## **Database Schema**
+
+The database schema for NetPitch consists of several key models that represent the core functionality of the platform, including users, profiles, pitch decks, and collaboration requests. Below is an overview of the most important models and their relationships:
+
+### **1. User**
+- **Description**: This model is inherited from Django’s built-in `User` model. It handles user authentication and stores basic user information like username, password, and email.
+  
+  **Fields**:
+  - `username`: The unique identifier for a user.
+  - `email`: The user's email address.
+  - `password`: A hashed version of the user's password.
+
+### **2. Profile**
+- **Description**: The `Profile` model extends the user model with additional fields for writers and producers. It stores information specific to the type of user.
+  
+  **Fields**:
+  - `user`: One-to-one relationship with Django’s built-in `User` model.
+  - `bio`: A short biography written by the user.
+  - `profile_image`: Stores the user's profile image, uploaded via Cloudinary.
+  - `user_type`: A choice field that defines whether the user is a writer or a producer.
+
+  **Relationships**:
+  - One-to-one relationship with the `User` model.
+
+### **3. PitchDeck**
+- **Description**: This model represents a pitch deck submitted by a writer. Each pitch deck contains detailed information about a media project, such as a film or TV show idea.
+  
+  **Fields**:
+  - `title`: The title of the pitch deck.
+  - `synopsis`: A brief description or overview of the project.
+  - `genre`: A foreign key linking to the `Genre` model.
+  - `theme`: An optional field where writers can add the project’s theme.
+  - `pitch_type`: A choice field to specify whether the project is a film or TV show.
+  - `writer`: A foreign key linking to the `User` model (specifically writers).
+  - `image`: An optional field for uploading a pitch deck image via Cloudinary.
+
+  **Relationships**:
+  - Foreign key relationship with the `User` model (one writer can have multiple pitch decks).
+  - Foreign key relationship with the `Genre` model (each pitch deck belongs to one genre).
+
+### **4. Genre**
+- **Description**: This model represents the genre of a media project (e.g., Drama, Comedy, Thriller). It helps categorize pitch decks.
+  
+  **Fields**:
+  - `name`: The name of the genre (e.g., "Drama", "Comedy").
+  
+  **Relationships**:
+  - One-to-many relationship with the `PitchDeck` model (one genre can apply to many pitch decks).
+
+### **5. CollaborationRequest**
+- **Description**: This model tracks collaboration requests sent by producers to writers. Producers can submit requests to work on specific pitch decks.
+  
+  **Fields**:
+  - `pitch`: Foreign key linking to the `PitchDeck` model.
+  - `producer`: Foreign key linking to the `Profile` model (specifically producers).
+  - `message`: A text field where producers can write a personalized message.
+  - `status`: A choice field that tracks the request status (Pending, Accepted, Declined).
+  
+  **Relationships**:
+  - Foreign key relationship with the `PitchDeck` model (each request belongs to a specific pitch).
+  - Foreign key relationship with the `Profile` model (each request is sent by a producer).
+
+---
+
+### **Relationships Summary**
+
+1. **User and Profile**: One-to-one relationship. Each user has one associated profile (either as a writer or a producer).
+2. **Profile and PitchDeck**: One-to-many relationship. A writer (via their profile) can submit multiple pitch decks.
+3. **Genre and PitchDeck**: One-to-many relationship. One genre can apply to multiple pitch decks.
+4. **PitchDeck and CollaborationRequest**: One-to-many relationship. A pitch deck can have multiple collaboration requests.
+5. **Profile (Producer) and CollaborationRequest**: One-to-many relationship. A producer can submit multiple collaboration requests to different writers.
+
+---
+
+### **Diagram Representation**
+
+Here’s a simplified diagram of the relationships:
+
+User ––> Profile
+|          |
+|          V
+|       PitchDeck ––> Genre
+|
+V
+CollaborationRequest
+
+In this diagram:
+- Each `User` has one `Profile`, which can either be a writer or producer.
+- A `Profile` (as a writer) can submit multiple `PitchDecks`.
+- Each `PitchDeck` can belong to one `Genre`.
+- A `Profile` (as a producer) can submit multiple `CollaborationRequests` to different pitch decks.
+
+---
+
+This schema showcases how the data is structured within NetPitch, allowing for scalable management of users, pitch decks, and collaborations.
