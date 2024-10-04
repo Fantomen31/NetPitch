@@ -354,4 +354,143 @@ In this diagram:
 
 ---
 
-This schema showcases how the data is structured within NetPitch, allowing for scalable management of users, pitch decks, and collaborations.
+## **Testing**
+
+
+### **1. Automated Testing**
+
+I have not performed any automated tesing throughout this project other then testing the code with w3c and/or flake8, which was done at the end of the project and will be previewed later down the testing section.
+
+---
+
+### **2. Manual Testing**
+
+Below is a detailed list of manual tests that were conducted during development, documenting the input, expected output, and actual results.
+
+#### **User Registration and Login**
+- **Signup**:
+    - **Tested**: Registering as a new user (Writer/Producer).
+    - **Expected Outcome**: User should be able to register successfully and be redirected to the profile page.
+    - **Actual Outcome**: Initially, the sign-up functionality only created a basic user profile without distinguishing between a Writer or Producer profile. This resulted in the creation of generic user profiles without any association to the selected profile type.
+    - **Issue**: The issue arose when extending Django’s User model to include distinct profile types (Writer and Producer). While the initial extension worked, after introducing additional models and views, the system encountered a problem where it only referenced the base user profile during sign-up. It failed to associate users with the correct profile type, causing errors in the profile creation process. Additionally, with DEBUG=False enabled, the system produced errors that made the page inaccessible, further complicating the troubleshooting process.
+    - **Solution**: To resolve the issue, I modified the sign-up process to ensure that the correct profile type (Writer or Producer) was created immediately upon user registration. I adjusted the sign-up form to explicitly capture and store the user’s selected profile type, and updated the logic in the views to ensure the extended profile data was retrieved and correctly linked to the user. Additionally, I temporarily switched DEBUG=True during testing to better track the errors and identify the root cause. Once the solution was in place and thoroughly tested, I reverted to DEBUG=False for production, ensuring the system was now correctly handling the user profiles without any further issues.
+    - **Status**: Fixed and functioning as expected. Users can now register successfully, and their selected profile type (Writer or Producer) is correctly associated with their account upon sign-up.
+
+- **Login**:
+    - **Tested**: Logging in with correct and incorrect credentials.
+    - **Expected Outcome**: Users should log in with valid credentials and receive error messages for invalid credentials.
+    - **Actual Outcome**: The default Django authentication system worked seamlessly for both valid and invalid login attempts. Users were able to log in successfully with the correct credentials, and the system correctly displayed error messages for invalid logins.
+    - **Status**: No significant issues encountered during testing. The default Django model handled the login functionality as expected, and no additional debugging or troubleshooting was required.
+
+- **Profile Management**:
+    - **Tested**: Updating profile information and uploading a profile image.
+    - **Expected Outcome**: Users should be able to update their bio and successfully upload a profile image.
+    - **Actual Outcome**:  Initially, profile updates worked well in the production environment. However, after integrating Cloudinary for media management, the profile image uploads stopped working, and the page became inaccessible.
+    - **Issue**: The issue arose because the Cloudinary storage backend was not fully configured in the environment variables. Specifically, the CLOUDINARY_URL was missing or incorrectly set, which caused the system to fail when trying to upload and retrieve images.
+    - **Solution**: To resolve this, I ensured that the CLOUDINARY_URL was correctly added to the environment variables in both local and production environments. Additionally, I verified that the cloudinary and dj3-cloudinary-storage packages were installed and correctly integrated into the INSTALLED_APPS section of the settings.py file. After these changes, the profile image uploads functioned as expected, and users were able to manage their profiles without any issues.
+    - **Status**: Fixed and working as expected.
+
+#### **Pitch Deck Management (For Writers)**
+- **Submit Pitch Deck**:
+    - **Tested**: Submitting a pitch deck with all required fields.
+    - **Expected Outcome**: Writers should be able to submit a new pitch deck and view it in their profile.
+    - **Actual Outcome**: Initially, the submission process allowed for pitch decks to be created, but there were two issues: the default image was not being utilized when no image was uploaded, and the genre selection field appeared blank, with no options to choose from.
+    - **Issue**: Default Image Issue: The issue with the default image stemmed from an incorrect file path configuration in the settings, which caused the system to fail to locate the default image when one wasn’t provided. The genre selection field was empty because I had not populated the Genre model with any genre entries. As a result, writers were unable to select a genre for their pitch decks.
+    - **Solution**: Solution:
+	•	For the default image issue, I corrected the pathing in the settings.py file to point to the correct default image location. This ensured that when a writer did not upload an image, the system would automatically display the default image.
+	•	To resolve the genre options issue, I populated the Genre model with a set of predefined genres (e.g., Drama, Comedy, Thriller), allowing writers to select from a range of options when submitting their pitch decks.
+    - **Status**: Both issues were resolved. Writers can now submit pitch decks with or without an image, and the genre options are available for selection during submission. The system correctly associates the pitch decks with the writer’s profile and displays them as expected.
+
+- **Edit/Delete Pitch Deck**:
+    - **Tested**: Editing and deleting an existing pitch deck.
+    - **Expected Outcome**: Writers should be able to update details and remove their pitch decks.
+    - **Actual Outcome**: Initially, the pitch deck editing feature worked for text fields (title, synopsis, etc.), but I encountered an issue when attempting to update the image associated with the pitch deck. Additionally, the delete function was not fully removing the pitch deck and its associated media files from the system.
+    - **Issue**: Image Update Issue: The system allowed text updates (title, synopsis, genre), but when trying to update the image, it failed to replace the existing image file with the new one. This was due to a missing check for file replacement in the view handling the pitch deck updates. Deletion Issue: While the pitch deck was being removed from the database, the associated media (e.g., images stored in Cloudinary) were not being deleted, leaving orphaned files in storage.
+    - **Status**: For the image update issue, I modified the view handling the pitch deck updates to properly check for and replace the old image with the new one. This ensured that the image associated with a pitch deck was correctly updated during the edit process. To resolve the deletion issue, I updated the deletion logic to not only remove the pitch deck from the database but also delete the associated image from Cloudinary when the pitch deck was deleted. This ensured that no unnecessary media files were left behind in storage.
+    - **Status**: Both the edit and delete functionalities are now working as expected. Writers can update any field in their pitch deck, including the image, and delete pitch decks along with their associated media without leaving orphaned files in storage.
+
+#### **Collaboration Requests (For Producers)**
+- **Request Collaboration**:
+    - **Tested**: Producers requesting collaboration on a pitch deck.
+    - **Expected Outcome**: Producers should be able to submit requests to collaborate with writers.
+    - **Actual Outcome**: Initially, producers were able to submit collaboration requests, but writers encountered problems when managing these requests. The form lacked the necessary buttons to accept or decline collaboration requests, and even after a request was accepted or declined, there was no option to delete or clear the request from the interface.
+    - **Issue**: Missing Accept/Delete Buttons: The collaboration request form did not include buttons for writers to accept or decline the requests. This made it impossible for writers to manage the incoming requests properly. Post-Decision Management: After writers accepted or declined a request, they were unable to clear or delete the request, leaving the request in an unresolved state.
+    - **Solution**: I updated the collaboration request management interface by adding Accept and Decline buttons to allow writers to properly handle incoming requests. Additionally, I implemented a Clear/Delete option, enabling writers to remove requests from their dashboard once they had accepted or declined them. This ensured that completed requests could be fully managed and removed from the system.
+    - **Status**: The collaboration request functionality is now working as expected. Writers can accept, decline, or clear collaboration requests, and the process is fully manageable from the writer’s interface. But there is a missing feature of how to connect with each other, I'd like to add a direct request through e-mail or other communcation signal. One issue I haven't had time to troubleshoot is to only place one request per/producer per/pitchdeck. 
+
+- **Manage Requests (For Writers)**:
+    - **Tested**: Writers accepting or declining collaboration requests.
+    - **Expected Outcome**: Writers should be able to view incoming requests and update their status.
+    - **Actual Outcome**: Initially, writers were able to view incoming collaboration requests, but they couldn’t effectively manage them. The interface lacked buttons to accept or decline the requests, and even after accepting or declining, the requests couldn’t be deleted or cleared from the system, causing clutter and confusion on the dashboard.
+    - **Issue**: Missing Accept/Decline Buttons: Writers could see the collaboration requests but had no way to accept or decline them due to the absence of appropriate buttons in the interface. Post-Decision Management: After accepting or declining a request, writers could not clear or delete the request, leaving it stuck on the dashboard in an unresolved state.
+    - **Solution**: I updated the request management interface to include Accept and Decline buttons, allowing writers to handle incoming collaboration requests properly. I also added functionality for clearing or deleting requests after a decision had been made, ensuring that writers could manage their requests efficiently and remove completed or declined requests from the dashboard.
+    - **Status**: Fully resolved. Writers can now accept, decline, and clear collaboration requests. The interface is fully functional, allowing for smooth request management. But there is a missing feature of how to connect with each other, I'd like to add a direct request through e-mail or other communcation signal. 
+
+#### **Admin Features**
+- **Manage Users**:
+    - **Tested**: Admins editing, deleting, and viewing users via the Django admin panel.
+    - **Expected Outcome**: Admins should be able to perform all CRUD operations on user profiles.
+    - **Actual Outcome**: Initially, only basic user accounts were created through the admin panel, but the associated extended profiles (Writer or Producer) were not generated automatically. As a result, while the user accounts appeared in the system, their extended profile data (such as bio, user type, and profile images) were missing, making the profiles incomplete.
+    - **Issue**: Missing Profile Creation: The admin panel successfully created users, but the extended profile types (Writer/Producer) were not being created alongside the user accounts. This led to incomplete user profiles that lacked the necessary information and association with the Writer/Producer roles.
+    - **Solution**: I updated the user creation logic in the admin panel to automatically generate the associated Profile for each user upon creation. This ensured that whenever a new user is created, an extended profile (either Writer or Producer) is also created and linked to the user. Additionally, I ensured that admins could edit and delete both the user and their extended profile, keeping the system consistent and avoiding incomplete data.
+    - **Status**: Resolved. Admins can now fully create, edit, and delete users, including their associated Writer/Producer profiles. The system correctly handles the creation of extended profiles upon user creation in the admin panel.
+
+- **Manage Pitch Decks**:
+    - **Tested**: Admins editing and deleting pitch decks from the admin panel.
+    - **Expected Outcome**: Admins should be able to manage all pitch decks in the system.
+    - **Actual Outcome**: 
+    - **Status**: 
+
+---
+
+### **3. Code Validation**
+
+The code for NetPitch was validated using various tools to ensure that it met coding standards and was free of syntax errors.
+
+#### **Python Code Validation**
+- **flake8** was used to ensure compliance with PEP 8 standards.
+- **Command Used**:
+    ```bash
+    flake8
+    ```
+- **Validation Result**: (Document whether any issues were found, or if the code passed validation.)
+
+#### **HTML/CSS Validation**
+- The HTML and CSS files were validated using the **W3C Validator**.
+- **URL Tested**: (You can list the URLs or specific HTML files tested here.)
+- **Validation Result**: At first I tested all the coded through URL, and not no issues or errors which I felt good about but new couldn't be true. So I copied all teh code for each page instead and got the following errors. (Document any errors or warnings and how they were resolved.)
+
+---
+
+### **4. Browser and Device Testing**
+
+Manual testing was done to ensure the application works across different browsers and screen sizes.
+
+#### **Browsers Tested**:
+- Google Chrome
+- Safari
+
+#### **Devices Tested**:
+- Mobile (iOS)
+- Desktop and google inspect dimension responsiveness. 
+
+**Results**:
+- **Browser Compatibility**: Worked well.
+- **Responsive Design**: Worked well.
+
+---
+
+### **5. Lighthouse Performance Testing**
+
+Google Lighthouse was used to assess the performance and accessibility of the application.
+
+- **Platform**: Google Chrome (Lighthouse)
+
+
+- **Result**: 
+   PHOTO
+
+---
+
+
+
