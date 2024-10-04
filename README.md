@@ -9,8 +9,7 @@
 6. [Database Schema](#database-schema)
 7. [Testing](#testing)
 8. [Deployment](#deployment)
-9. [Contributing](#contributing)
-10. [Credits](#credits)
+9. [Credits](#credits)
 
 ## **Project Overview**
 
@@ -672,4 +671,31 @@ To deploy NetPitch to Heroku, follow these steps:
 The live version of NetPitch can be accessed at:  
 [NetPitch Live on Heroku](https://netpitch-4fea66f5e2b7.herokuapp.com/)
 
+## **Credits**
 
+NetPitch was made possible through the use of various technologies, tools, and resources. Special thanks to the following:
+
+### **1. Technologies**
+- **[Django](https://www.djangoproject.com/)**: Django is the main framework used to build the backend of this application, providing a robust and scalable structure.
+- **[Bootstrap](https://getbootstrap.com/)**: Bootstrap was used for the frontend to ensure responsive design and a smooth user experience across all devices.
+- **[PostgreSQL](https://www.postgresql.org/)**: PostgreSQL was the database system used to store and manage all project data, offering a reliable and secure backend.
+- **[Cloudinary](https://cloudinary.com/)**: Cloudinary was used for media management, including storing and serving images such as profile pictures and pitch deck visuals.
+- **[Heroku](https://www.heroku.com/)**: Heroku was the platform used for hosting and deploying the live version of NetPitch, ensuring a seamless deployment process.
+- **[Django Summernote](https://summernote.org/)**: Django Summernote was used to provide a rich-text editing interface, making it easier for users to format their pitch deck submissions.
+- **[Whitenoise](http://whitenoise.evans.io/)**: Whitenoise was used to serve static files efficiently in production, ensuring proper management of CSS and JS assets.
+  
+### **2. Code Validation**
+- **[flake8](https://flake8.pycqa.org/)**: This tool was used to check for PEP 8 compliance and maintain code quality throughout the project.
+- **[W3C Validator](https://validator.w3.org/)**: The W3C HTML/CSS Validator was used to ensure that the frontend code adhered to web standards.
+
+### **3. Tutorials and Documentation**
+- **[Django Documentation](https://docs.djangoproject.com/)**: The official Django documentation was an essential resource throughout the development process, providing guidance on best practices.
+- **[Bootstrap Documentation](https://getbootstrap.com/docs/5.0/getting-started/introduction/)**: The official Bootstrap documentation helped with implementing responsive design and UI components.
+
+### **4. Special Thanks**
+- **Contributors**: A big thank you to my friends and my mentor who provided help with readibility for colorschems and alert warnings for NetPitch.
+- **Community Support**: Special thanks to the Django and Stack Overflow communities for their insights and solutions to technical challenges encountered during development.
+
+---
+
+NetPitch is built on the shoulders of these incredible technologies and resources. Thank you to everyone who contributed directly or indirectly to coding before me!
