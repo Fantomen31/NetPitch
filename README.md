@@ -104,3 +104,159 @@ NetPitch offers a variety of features tailored to the needs of both writers and 
 ---
 
 With these additional features listed in the **Future Features** section, it gives users and contributors a forward-looking vision for how the platform will evolve and provides a clear path for growth.
+
+## **Technologies Used**
+
+NetPitch leverages several modern technologies and tools to ensure scalability, security, and a seamless user experience. Below is a breakdown of the key technologies used in the project:
+
+### **Backend Technologies:**
+- **Django**: Django is the primary web framework used for developing the backend of NetPitch. It handles data processing, authentication, and the management of models such as user profiles, pitch decks, and collaboration requests.
+- **PostgreSQL**: PostgreSQL is the database management system that stores all of NetPitch’s data, including user information, pitch decks, and collaboration requests. It offers a scalable and secure database solution.
+- **Gunicorn**: Gunicorn is a Python WSGI HTTP server used to serve the Django application on Heroku. It ensures efficient handling of HTTP requests in production environments.
+
+### **Frontend Technologies:**
+- **Bootstrap**: Bootstrap is used to ensure a fully responsive and mobile-friendly user interface. It allows the platform to be accessed seamlessly across various screen sizes and devices.
+- **Django Templates**: Django’s template system is used to render dynamic content on the frontend, making sure data from the backend is presented in a clean, user-friendly manner.
+
+### **Media & File Storage:**
+- **Cloudinary**: Cloudinary is used for the storage and management of media files such as profile images and pitch deck visuals. Its integration with Django ensures that media is handled efficiently and delivered quickly across the globe.
+- **dj3-cloudinary-storage**: This package integrates Cloudinary storage with Django, allowing for easy upload and retrieval of media files such as images and documents.
+
+### **Deployment & Hosting:**
+- **Heroku**: Heroku is the platform used to deploy the live version of NetPitch. It supports scalable web applications and ensures that NetPitch remains accessible to users around the world.
+- **Whitenoise**: Whitenoise is used to manage and serve static files directly from the web server. It is particularly useful in production to ensure that CSS, JavaScript, and image files are efficiently served.
+
+### **Database Configuration:**
+- **dj-database-url**: This package is used to easily configure the PostgreSQL database for production environments by parsing the `DATABASE_URL` from the environment variables.
+
+### **Code Validation:**
+- **flake8**: This Python linter is used for code quality checks. It helps enforce PEP 8 compliance and identifies potential issues in the codebase.
+- **W3C Validator**: Used to validate the HTML and CSS of the project, ensuring that the frontend is clean and standards-compliant.
+
+### **Image & File Processing:**
+- **Pillow**: Pillow is a Python Imaging Library (PIL) fork that adds image processing capabilities to the platform. It allows the application to handle image uploads and manipulation efficiently.
+
+### **Rich Text Editing:**
+- **Django Summernote**: Provides a rich-text editing interface, allowing writers to format their pitch deck submissions with ease. It ensures that users can include various formatting options like bullet points and text styles in their submissions.
+
+---
+
+These technologies come together to create a robust, responsive, and scalable platform that caters to both writers and producers in the media industry.
+
+## **Installation & Setup**
+
+To run the NetPitch project locally, follow these steps to get the application up and running on your machine.
+
+### **Prerequisites:**
+Before starting, ensure you have the following installed on your machine:
+- **Python 3.x**: Required to run the Django application.
+- **PostgreSQL**: The database system used by the project.
+- **Cloudinary Account**: If you want to handle media files as in the production version.
+
+### **1. Clone the Repository**
+Start by cloning the repository to your local machine:
+```bash
+git clone https://github.com/your-username/netpitch.git
+cd netpitch
+
+# On macOS/Linux
+python3 -m venv env
+source env/bin/activate
+
+# On Windows
+python -m venv env
+env\Scripts\activate
+
+pip install -r requirements.txt
+
+SECRET_KEY=your-secret-key
+DATABASE_URL=your-database-url
+CLOUDINARY_URL=cloudinary-url
+DEBUG=True  # Set this to False in production
+
+# Access PostgreSQL
+psql
+
+# In the PostgreSQL shell, create a new database
+CREATE DATABASE netpitch_db;
+
+DATABASE_URL=postgres://username:password@localhost:5432/netpitch_db
+
+python manage.py migrate
+
+python manage.py createsuperuser
+
+python manage.py runserver
+
+#You can also deploy the project to Heroku for a live production environment.
+
+	1.	Create a Heroku account at Heroku.
+	2.	Install the Heroku CLI:
+
+#bash
+curl https://cli-assets.heroku.com/install.sh | sh
+
+heroku login
+
+heroku create your-app-name
+
+git push heroku main
+
+#Set the environment variables on Heroku (replace values with your own):
+
+heroku config:set SECRET_KEY=your-secret-key
+heroku config:set DATABASE_URL=your-database-url
+heroku config:set CLOUDINARY_URL=your-cloudinary-url
+
+#Migrate the database on Heroku:
+
+heroku run python manage.py migrate
+
+#Collect static files:
+heroku run python manage.py collectstatic --noinput
+```
+
+---
+
+
+
+## **Usage**
+
+Once NetPitch is set up and running, both writers and producers can interact with the platform's key features. Below is an overview of how to use the main functionalities of the application.
+
+### **1. User Registration and Login**
+- **Signup**: Navigate to the signup page from the homepage or the user dropdown menu. Fill in the necessary details, including your user type (Writer or Producer), email, username, and password.
+- **Login**: If you already have an account, log in by entering your username and password on the login page.
+- **Profile Management**: Once logged in, users can access their profile page from the menu. Here, they can update their bio, profile image, and view any pitch decks they have submitted, as well as their sent or recieved collaboration requests. 
+
+### **2. Creating a Pitch Deck (For Writers)**
+- Writers can submit new pitch decks by navigating to the "Submit Pitch Deck" section on their profile menu, by clicking the "Submit New Pitch Deck" button.
+- **Form Fields**: Provide the required details, including the project title, synopsis, genre, and pitch type (Film or TV Show).
+- **Uploading Images**: Writers can upload cover art or visual aids for their pitch deck, which will be stored via Cloudinary.
+- **Text Formatting**: The platform uses a rich text editor (Django Summernote), allowing writers to format their synopsis and add emphasis using bullet points, bold text, etc.
+- **Submission**: Once submitted, the pitch deck will be available for producers & other writers to view.
+
+### **3. Viewing and Requesting Collaboration (For Producers)**
+- Producers can browse all submitted pitch decks by navigating to the **Pitch Deck Gallery** either from their Profile page or through the home page links. 
+- **Viewing a Pitch Deck**: Producers can click on a specific pitch deck to view the full synopsis, title, genre, and images associated with it.
+- **Request Collaboration**: If a producer is interested in a project, they can submit a collaboration request directly from the pitch deck’s page. The writer will then be notified of the request.
+
+### **4. Managing Collaboration Requests (For Writers)**
+- **Accept/Decline Requests**: Writers can view all collaboration requests from producers on their profile dashboard. Each request has an option to accept, decline, or clear the request.
+- **Collaboration Status**: Once a request is accepted, the status changes to **Accepted**, and communication between the writer and producer can continue via external channels. (Something I'd like to change to internal channels in the future.)
+
+### **5. Updating Profiles**
+- **Edit Profile**: Both writers and producers can update their profile information by visiting their profile page. This includes updating their bio, profile picture, and any other details about themselves.
+- **Profile Image Management**: Profile images are uploaded and stored via Cloudinary, and users can change or remove their profile pictures at any time.
+
+### **6. Admin Features**
+- **Admin Panel**: Admins have access to the Django admin panel, where they can manage users, pitch decks, and collaboration requests.
+- **Search and Filtering**: Admins can search for specific users or projects and filter by status, pitch type, or user role (Writer/Producer).
+- **Moderation**: Admins have the ability to edit or delete pitch decks, collaboration requests, and user profiles to maintain the integrity of the platform.
+
+---
+
+### **Live Demo**
+To see the platform in action, visit the live demo of NetPitch [here](https://netpitch-4fea66f5e2b7.herokuapp.com/). 
+- **Sign up** as a writer or producer to explore the full functionality of the platform.
+- **Test Features**: Submit a pitch deck, request collaborations, and manage your profile just as you would in a real-world setting.
