@@ -441,6 +441,7 @@ Below is a detailed list of manual tests that were conducted during development,
     - **Actual Outcome**: 
     - **Status**: 
 
+
 ---
 
 ### **3. Code Validation**
@@ -490,7 +491,185 @@ Google Lighthouse was used to assess the performance and accessibility of the ap
 - **Result**: 
    PHOTO
 
+
+### **7. Static Files Issue (DEBUG=False)**
+
+During the deployment process, an issue arose when setting `DEBUG=False`. The static files, including CSS, JavaScript, and images, were not being properly served, which caused changes in the layout and styling of the website (such as color changes and missing assets).
+
+#### **Issue**:
+- When `DEBUG=False`, Django does not automatically serve static files in production. This led to missing CSS and other static files when the site was accessed, resulting in broken styles and incomplete functionality.
+
+#### **Solution**:
+- The issue was resolved by running the `collectstatic` command to gather all the static files into the `STATIC_ROOT` directory for production use:
+    ```bash
+    python manage.py collectstatic
+    ```
+- After running this command, the static files were correctly served, and the layout and design of the site were restored. 
+- Additionally, Whitenoise was used to ensure static files were properly served in production.
+
+With this fix, the site works as expected when `DEBUG=False`, and all static assets are correctly loaded.
 ---
 
+## **Deployment**
+
+NetPitch is deployed on Heroku, and this section provides instructions for both local development deployment and deploying the project to a live environment like Heroku.
+
+### **1. Local Deployment**
+
+To deploy NetPitch locally on your own machine:
+
+#### **Prerequisites**:
+- Ensure you have Python and PostgreSQL installed.
+- Install necessary libraries (as specified in the `requirements.txt` file).
+- Set up a Cloudinary account for media storage if needed.
+
+#### **Steps**:
+
+1. **Clone the Repository**:
+    ```bash
+    git clone https://github.com/your-username/netpitch.git
+    cd netpitch
+    ```
+
+2. **Set Up Virtual Environment**:
+    It is recommended to use a virtual environment to manage dependencies.
+    ```bash
+    # Create a virtual environment
+    python3 -m venv env
+
+    # Activate the virtual environment
+    source env/bin/activate  # On macOS/Linux
+    env\Scripts\activate  # On Windows
+    ```
+
+3. **Install Dependencies**:
+    Install the required packages from the `requirements.txt` file.
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4. **Set Up Environment Variables**:
+    Create an `.env` file in the root of your project and add the following:
+    ```plaintext
+    SECRET_KEY=your-secret-key
+    DATABASE_URL=your-database-url
+    CLOUDINARY_URL=your-cloudinary-url
+    ```
+
+5. **Set Up PostgreSQL**:
+    Create a PostgreSQL database and configure it in the `.env` file under `DATABASE_URL`.
+
+6. **Apply Migrations**:
+    Run the following command to apply the necessary database migrations:
+    ```bash
+    python manage.py migrate
+    ```
+
+7. **Create Superuser** (Optional):
+    Create a superuser to access the admin panel.
+    ```bash
+    python manage.py createsuperuser
+    ```
+
+8. **Run the Development Server**:
+    Start the local server using:
+    ```bash
+    python manage.py runserver
+    ```
+
+    You should now be able to access the application at the local develoepr enivronent host, for me it was 'https://8000-fantomen31-netpitch-y8c92sz8q4w.ws-eu116.gitpod.io'.
+
+---
+
+### **2. Deployment to Heroku**
+
+To deploy NetPitch to Heroku, follow these steps:
+
+#### **Prerequisites**:
+- Create an account at [Heroku](https://heroku.com).
+- Install the Heroku CLI on your machine.
+- Ensure that PostgreSQL and Cloudinary are set up for production.
+
+#### **Steps**:
+
+1. **Log into Heroku**:
+    Log into your Heroku account using the CLI:
+    ```bash
+    heroku login
+    ```
+
+2. **Create a New Heroku App**:
+    Create a new Heroku app for the project:
+    ```bash
+    heroku create your-app-name
+    ```
+
+3. **Set Up Environment Variables**:
+    Configure the necessary environment variables in Heroku:
+    ```bash
+    heroku config:set SECRET_KEY=your-secret-key
+    heroku config:set DATABASE_URL=your-database-url
+    heroku config:set CLOUDINARY_URL=your-cloudinary-url
+    ```
+
+4. **Add Heroku Postgres**:
+    Add the Heroku Postgres add-on for database management:
+    ```bash
+    heroku addons:create heroku-postgresql:hobby-dev
+    ```
+
+5. **Prepare Static Files for Deployment**:
+    Collect static files to serve them via Whitenoise:
+    ```bash
+    python manage.py collectstatic --noinput
+    ```
+
+6. **Push Code to Heroku**:
+    Deploy the application by pushing your code to Heroku:
+    ```bash
+    git push heroku main
+    ```
+
+7. **Apply Migrations on Heroku**:
+    Run the following command to apply database migrations on Heroku:
+    ```bash
+    heroku run python manage.py migrate
+    ```
+
+8. **Create Superuser on Heroku** (Optional):
+    If you need admin access on your live site, create a superuser:
+    ```bash
+    heroku run python manage.py createsuperuser
+    ```
+
+9. **Launch the App**:
+    Once deployed, your app will be live on Heroku at the URL provided by the platform. You can access it using:
+    ```bash
+    heroku open
+    ```
+
+---
+
+### **3. Additional Deployment Notes**
+
+- **Debug Mode**: 
+  Ensure that `DEBUG=False` is set in your production environment for security purposes.
+  
+- **Static and Media Files**: 
+  - Heroku uses **Whitenoise** to serve static files.
+  - Cloudinary is used for managing and serving media files (e.g., profile images, pitch deck images).
+  
+- **Database Configuration**: 
+  Heroku uses its own Postgres add-on for production databases. Make sure your `DATABASE_URL` is correctly configured both locally and on Heroku.
+
+- **Gunicorn**: 
+  Ensure you are using **Gunicorn** as the WSGI server for production. It's already included in the `requirements.txt` file.
+
+---
+
+### **4. Live Demo**
+
+The live version of NetPitch can be accessed at:  
+[NetPitch Live on Heroku](https://netpitch-4fea66f5e2b7.herokuapp.com/)
 
 
