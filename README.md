@@ -10,8 +10,7 @@
 7. [Testing](#testing)
 8. [Deployment](#deployment)
 9. [Contributing](#contributing)
-10. [License](#license)
-11. [Credits](#credits)
+10. [Credits](#credits)
 
 ## **Project Overview**
 
