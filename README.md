@@ -41,6 +41,8 @@ NetPitch leverages a variety of modern web technologies to deliver a robust and 
 ### **Live Demo**
 You can check out the live version of NetPitch at [NetPitch Live Demo](https://netpitch-4fea66f5e2b7.herokuapp.com/).
 
+![NetPitch Homepage](./assets/readme.media/features/homescreen.png)
+
 ## **Features**
 
 NetPitch offers a variety of features tailored to the needs of both writers and producers in the film and TV industry. Below is an overview of the key features:
@@ -49,15 +51,58 @@ NetPitch offers a variety of features tailored to the needs of both writers and 
 - **Signup/Login/Logout**: Users can create accounts, log in, and log out securely.
 - **User Profiles**: Each user (whether a writer or producer) has a personalized profile page that includes their bio, profile picture, and user type (Writer or Producer). Profiles are customizable, allowing users to update their information at any time.
 
+**Home Page**
+![NetPitch Homepage](./assets/readme.media/features/homescreen.png)
+
+**Log in &  Sign Up**
+
+![NetPitch Homepage](./assets/readme.media/features/login-signup.png)
+
+**Home Page Logged In**
+![NetPitch Homepage](./assets/readme.media/features/homepage-log-in.png)
+
+**Login Form**
+![NetPitch Homepage](./assets/readme.media/features/log-in-form.png)
+
+**Sign-up Form**
+![NetPitch Homepage](./assets/readme.media/features/signup-form.png)
+
+**Producer Page**
+![NetPitch Homepage](./assets/readme.media/features/producer-profile.png)
+
+**Writer Page**
+![NetPitch Homepage](./assets/readme.media/features/writers-profile.png)
+
+
 ### **2. Pitch Deck Management**
 - **Submit Pitch Decks**: Writers can submit pitch decks detailing their film or TV show ideas. Each pitch deck includes fields like title, synopsis, genre, and the type of project (Film or TV Show).
 - **Edit/Delete Pitch Decks**: Writers can manage their submissions by editing or deleting pitch decks if needed.
 - **Media Integration**: Each pitch deck submission supports images (such as cover art or concept visuals) via Cloudinary integration.
 
+**Submit Pitch Deck**
+![NetPitch Homepage](./assets/readme.media/features/submit-deck-button.png)
+
+![NetPitch Homepage](./assets/readme.media/features/submit-deck-form.png)
+
+**Edit Pitch Deck**
+![NetPitch Homepage](./assets/readme.media/features/edit-delete-deck.png)
+
+![NetPitch Homepage](./assets/readme.media/features/edit-form.png)
+
 ### **3. Collaboration Requests**
 - **Request Collaboration**: Producers can view submitted pitch decks and request to collaboration with writers.
 - **Manage Requests**: Writers can accept, decline, or clear collaboration requests. This ensures control over which projects they want to move forward with. Producers can clear collaboration requests as well.
 - **Status Tracking**: Collaboration requests have a status indicator (Pending, Accepted, or Declined) to track the progress of each request.
+
+**Collaborate** 
+![NetPitch Homepage](./assets/readme.media/features/collaborate.png)
+
+![NetPitch Homepage](./assets/readme.media/features/collaboration-form.png)
+
+**Manage Requests**
+![NetPitch Homepage](./assets/readme.media/features/writer-collaboration.png)
+
+![NetPitch Homepage](./assets/readme.media/features/producer-collaboration.png)
 
 ### **4. Profile Image Management**
 - **Cloudinary Integration**: Users can upload and manage their profile pictures using Cloudinary, ensuring efficient and scalable media storage.
@@ -68,6 +113,9 @@ NetPitch offers a variety of features tailored to the needs of both writers and 
 ### **6. Admin Panel (Django Admin)**
 - **User & Pitch Deck Management**: Admins can manage user accounts, pitch decks, and collaboration requests from the Django admin panel.
 - **Search & Filters**: Admins can search and filter pitch decks, profiles, and collaboration requests for easier management.
+
+**Admin**
+![NetPitch Homepage](./assets/readme.media/features/admin.png)
 
 ### **7. Responsive Design**
 - **Mobile-Friendly**: Built with Bootstrap, NetPitch provides a fully responsive experience, ensuring seamless usage across desktops, tablets, and mobile devices.
@@ -248,6 +296,9 @@ Once NetPitch is set up and running, both writers and producers can interact wit
 ### **5. Updating Profiles**
 - **Edit Profile**: Both writers and producers can update their profile information by visiting their profile page. This includes updating their bio, profile picture, and any other details about themselves.
 - **Profile Image Management**: Profile images are uploaded and stored via Cloudinary, and users can change or remove their profile pictures at any time.
+
+**Update Profile Form**
+![NetPitch Homepage](./assets/readme.media/features/update-profile-form.png)
 
 ### **6. Admin Features**
 - **Admin Panel**: Admins have access to the Django admin panel, where they can manage users, pitch decks, and collaboration requests.
@@ -457,11 +508,38 @@ The code for NetPitch was validated using various tools to ensure that it met co
     ```
 - **Validation Result**: (Document whether any issues were found, or if the code passed validation.)
 
+**Flake8**
+
+![NetPitch Homepage](./assets/readme.media/testing/flake8.png)
+
+**Python Test**
+
+![NetPitch Homepage](./assets/readme.media/testing/python-test.png)
+
+**Python Test Errors**
+
+![NetPitch Homepage](./assets/readme.media/testing/python-test-error.png)
+
 #### **HTML/CSS Validation**
 - The HTML and CSS files were validated using the **W3C Validator**.
 - **URL Tested**: (You can list the URLs or specific HTML files tested here.)
 - **Validation Result**: At first I tested all the coded through URL, and not no issues or errors which I felt good about but new couldn't be true. So I copied all teh code for each page instead and got the following errors. (Document any errors or warnings and how they were resolved.)
 
+**HTML Test**
+
+![NetPitch Homepage](./assets/readme.media/testing/html-checker.png)
+
+**HTML Test Error**
+
+![NetPitch Homepage](./assets/readme.media/testing/html-checker-error.png)
+
+**CSS Test**
+
+![NetPitch Homepage](./assets/readme.media/testing/css-checker.png)
+
+**CSS Test Error**
+
+![NetPitch Homepage](./assets/readme.media/testing/css-checker-error.png)
 ---
 
 ### **4. Browser and Device Testing**
@@ -490,7 +568,8 @@ Google Lighthouse was used to assess the performance and accessibility of the ap
 
 
 - **Result**: 
-   PHOTO
+
+![NetPitch Homepage](./assets/readme.media/testing/lighthouse-test.png)
 
 
 ### **7. Static Files Issue (DEBUG=False)**
@@ -681,17 +760,19 @@ The development of NetPitch followed an Agile methodology, ensuring flexibility 
 - Each sprint was planned with clear objectives, focusing on delivering specific features or functionality in short time frames.
 - Key tasks were identified and added to the project management board, ensuring "all" contributors had a clear understanding of the goals for each sprint.
 
+![NetPitch Homepage](./assets/readme.media/project-board/project-board-1.png)
+
 ### **2. Project Management Tools**
 - **GitHubs Project Board** was used to manage tasks and track progress. The board was organized with columns for "To Do", "In Progress", and "Done".
 - The board was updated regularly to reflect the progress of each sprint.
 
-_**Image**: Add a screenshot of your project board, showing tasks at different stages of development (To Do, In Progress, Done)._
+![NetPitch Homepage](./assets/readme.media/project-board/project-board-2.png)
 
 ### **3. Sprint Cycles**
 - Each sprint lasted approximately one day. At the beginning of each sprint, the MVP tasks were prioritized based on feedback from the previous sprint and ongoing project needs.
 - Daily stand-ups were used to track progress and adjust the sprint scope if necessary.
 
-_**Image**: Optionally, include a screenshot of your sprint summary or task distribution from a sprint cycle._
+![NetPitch Homepage](./assets/readme.media/project-board/project-board-4.png)
 
 ### **4. Continuous Feedback and Iteration**
 - Throughout development, feedback was gathered after each sprint to improve functionality and fix bugs. User stories were updated regularly based on testing and feature development.
