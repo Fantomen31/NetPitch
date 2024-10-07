@@ -1,5 +1,7 @@
 # **NetPitch**
 
+![NetPitch Homepage](./assets/readme.media/features/homescreen.png)
+
 ## **Table of Contents**
 1. [Project Overview](#project-overview)
 2. [Features](#features)
@@ -41,7 +43,7 @@ NetPitch leverages a variety of modern web technologies to deliver a robust and 
 ### **Live Demo**
 You can check out the live version of NetPitch at [NetPitch Live Demo](https://netpitch-4fea66f5e2b7.herokuapp.com/).
 
-![NetPitch Homepage](./assets/readme.media/features/homescreen.png)
+
 
 ## **Features**
 
