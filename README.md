@@ -53,8 +53,7 @@ NetPitch offers a variety of features tailored to the needs of both writers and 
 - **Signup/Login/Logout**: Users can create accounts, log in, and log out securely.
 - **User Profiles**: Each user (whether a writer or producer) has a personalized profile page that includes their bio, profile picture, and user type (Writer or Producer). Profiles are customizable, allowing users to update their information at any time.
 
-**Home Page**
-![NetPitch Homepage](./assets/readme.media/features/homescreen.png)
+
 
 **Log in &  Sign Up**
 
