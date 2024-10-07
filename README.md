@@ -9,7 +9,9 @@
 6. [Database Schema](#database-schema)
 7. [Testing](#testing)
 8. [Deployment](#deployment)
-9. [Credits](#credits)
+9. [Agile](#Agile)
+10. [Wireframe](#Wireframe)
+11. [Credits](#credits)
 
 ## **Project Overview**
 
@@ -670,6 +672,41 @@ To deploy NetPitch to Heroku, follow these steps:
 
 The live version of NetPitch can be accessed at:  
 [NetPitch Live on Heroku](https://netpitch-4fea66f5e2b7.herokuapp.com/)
+
+## **AGILE Methodology**
+
+The development of NetPitch followed an Agile methodology, ensuring flexibility and continuous feedback throughout the project. This approach helped in managing the complexity of the platform by breaking the work into smaller, manageable iterations (sprints). Below is an overview of the Agile processes used during development.
+
+### **1. Sprint Planning**
+- Each sprint was planned with clear objectives, focusing on delivering specific features or functionality in short time frames.
+- Key tasks were identified and added to the project management board, ensuring "all" contributors had a clear understanding of the goals for each sprint.
+
+### **2. Project Management Tools**
+- **GitHubs Project Board** was used to manage tasks and track progress. The board was organized with columns for "To Do", "In Progress", and "Done".
+- The board was updated regularly to reflect the progress of each sprint.
+
+_**Image**: Add a screenshot of your project board, showing tasks at different stages of development (To Do, In Progress, Done)._
+
+### **3. Sprint Cycles**
+- Each sprint lasted approximately one day. At the beginning of each sprint, the MVP tasks were prioritized based on feedback from the previous sprint and ongoing project needs.
+- Daily stand-ups were used to track progress and adjust the sprint scope if necessary.
+
+_**Image**: Optionally, include a screenshot of your sprint summary or task distribution from a sprint cycle._
+
+### **4. Continuous Feedback and Iteration**
+- Throughout development, feedback was gathered after each sprint to improve functionality and fix bugs. User stories were updated regularly based on testing and feature development.
+- Iteration was key to the Agile process. Features such as user profile management, pitch deck submissions, and collaboration requests were refined over multiple sprints, ensuring they met user needs and felt beter.
+
+### **5. Retrospectives and Improvements**
+- After each sprint, retrospectives were conducted to review what went well, what could be improved, and the lessons learned for the next sprint. 
+- Challenges like initial issues with profile creation and static files were identified and addressed through this process.
+
+### **6. Final Sprint and Release**
+- The final sprint focused on polishing the user interface, optimizing performance, and ensuring all core features worked as expected in production.
+- Testing was carried out to ensure the platform was stable and ready for deployment.
+
+
+---
 
 ## **Credits**
 
